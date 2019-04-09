@@ -1,6 +1,10 @@
 package emotionalSupport;
 
 public class Lab extends Room {
+	public Lab(Lab lab) {
+		super((Room) lab);
+	}
+	
 	public Lab(String name, int capacity, Equipment labEquipment) {
 		super(name, capacity, false);
 		this.equipment = labEquipment;
