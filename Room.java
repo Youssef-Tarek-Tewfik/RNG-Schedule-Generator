@@ -8,8 +8,8 @@ public class Room {
 	}
 	
 	protected String name;
+	private final int id;
 	private final int capacity;
-	private boolean isOccupied;
 	protected Equipment equipment;
 	// Instructor	TBA
 	// Course		TBA	 
@@ -17,19 +17,17 @@ public class Room {
 	private static int Count = 0;
 	
 	// This "Copy" constructor will NOT increment the count
-	public Room(Room room) {
+	/*public Room(Room room) {
 		this.name = room.name;
 		this.capacity = room.capacity;
-		this.isOccupied = room.isOccupied;
 		this.equipment = room.equipment;
-	}
+	}*/
 
 	public Room(String name, int capacity, boolean hasPCs) {
 		this.name = name;
 		this.capacity = capacity;
 		this.equipment = (hasPCs)? Equipment.Computers : Equipment.None;
-		this.isOccupied = false;	
-		++Count;
+		id = Count++;
 	}
 	
 	public Room(String name, int capacity) {
@@ -48,28 +46,21 @@ public class Room {
 		return name;
 	}
 	
-	public boolean isOccupied() {
-		return isOccupied;
-	}
-
-	public void setIsOccupied(boolean isOccupied) {
-		this.isOccupied = isOccupied;
-	}
-	
 	public int getCapacity() {
 		return capacity;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
 	public boolean canHold(int attendees) {
 		return (attendees <= capacity);
 	}
 	
 	public int forceFill(int attendees) {
-		if (isOccupied)
-			return attendees;
 		if (attendees <= 0)
 			return 0;
-		isOccupied = true;
 		if (canHold(attendees))
 			return 0;
 		return capacity - attendees;
