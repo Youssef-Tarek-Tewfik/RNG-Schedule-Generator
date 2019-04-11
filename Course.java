@@ -1,7 +1,6 @@
 package emotionalSupport;
 
-class Course
-{
+public class Course {
     private String ID;
     private String Name;
     private int No_of_lecs,No_of_sections,No_of_labs;
@@ -13,25 +12,27 @@ class Course
     private Room room [] = new Room [No_of_sections] ;
     private Lab lab[] = new Lab [No_of_labs];
     
- Course(String ID,String Name,int No_of_lecs,int No_of_sections,int No_of_labs,int Lec_hrs,int Sec_hrs,int Lab_hrs,int No_of_TAs,
- Doctor t,TeachingAssistant ta[],Hall hall,Room room[],Lab lab[])
- {
-     this.ID = ID;
-     this.Name = Name;
-     this.No_of_lecs = No_of_lecs;
-     this.No_of_sections = No_of_sections;
-     this.No_of_labs = No_of_labs;
-     this.Lec_hrs = Lec_hrs;
-     this.Sec_hrs = Sec_hrs;
-     this.Lab_hrs = Lab_hrs;
-     this.No_of_TAs =No_of_TAs;
-     this.t = t;
-     this.ta = ta;
-     this.hall = hall;
-     this.room = room;
-     this.lab = lab;
-     
- }
+    public Course(String ID, String Name,
+    			  int No_of_lecs, int No_of_sections, int No_of_labs,
+    			  int Lec_hrs,    int Sec_hrs, 		 int Lab_hrs, 		int No_of_TAs,
+    			  Doctor t, 		 TeachingAssistant ta[], 
+    			  Hall hall, 	 Room room[], 		 
+    			  Lab lab[]) {
+		this.ID = ID;
+		this.Name = Name;
+		this.No_of_lecs = No_of_lecs;
+		this.No_of_sections = No_of_sections;
+		this.No_of_labs = No_of_labs;
+		this.Lec_hrs = Lec_hrs;
+		this.Sec_hrs = Sec_hrs;
+		this.Lab_hrs = Lab_hrs;
+		this.No_of_TAs =No_of_TAs;
+		this.t = t;
+		this.ta = ta;
+		this.hall = hall;
+		this.room = room;
+		this.lab = lab;    
+    }
 
     public int getNo_of_lecs() {
         return No_of_lecs;
@@ -64,6 +65,4 @@ class Course
     public int getNo_of_TAs() {
         return No_of_TAs;
     }
- 
- 
 }

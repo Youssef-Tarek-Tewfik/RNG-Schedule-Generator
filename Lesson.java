@@ -1,36 +1,37 @@
-class Lesson
-{
-    
-    private String Type;              // Lecture / section / lab
-    private String Name;              // subject Name
-    private String Teacher;
-    private String Place;             // class/section/lab
-    private String Time; 
-    private static int Count;
+package emotionalSupport;
 
-    Lesson(Course c,Doctor t,Hall hall,String Time)    //Lecture
-    {
-        Type = "Lecture";
-        Name = c.getName();
-        Teacher = t.getName();
-        Count++;
+public class Lesson {
+	public enum LessonType {
+		Lecture,
+		Section
+	}
+	
+	public LessonType lessonType;
+	public Course course;
+    public Instructor instructor;
+    public Room room;
+    private int startTime;
+    private int endTime;
+    private static int Count = 0;
+
+    @Override
+    public boolean equals(Object obj) { // false = yet7at
+    	Lesson other = (Lesson) obj;
+    	if (!this.room.equals(other.room))
+    		return false;
+    	
+    	// TBA Day, Time and Instructor overlapping
     }
     
-    Lesson(Course c,TeachingAssistant ta,Room r,Lab lab,String Time)                                          // section 
-    {
-        Type = "section";
-        Name = c.getName();
-        Teacher = ta.getName();
+    public Lesson(Course c, Instructor t, Hall hall, LessonType lt) {
+        lessonType = lt;
+        course = c;
+        instructor = (lt == LessonType.Lecture)? (Doctor) t: (TeachingAssistant) t;
         Count++;
-        
+        // TBA Day and Time initializations
     }
 
     public static int getCount() {
         return Count;
     }
-    
-   
-    
-    
-    
 }

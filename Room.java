@@ -10,10 +10,7 @@ public class Room {
 	protected String name;
 	private final int id;
 	private final int capacity;
-	protected Equipment equipment;
-	// Instructor	TBA
-	// Course		TBA	 
-	
+	protected Equipment equipment;	
 	private static int Count = 0;
 	
 	// This "Copy" constructor will NOT increment the count
@@ -33,7 +30,7 @@ public class Room {
 	public Room(String name, int capacity) {
 		this(name, capacity, false);
 	}
-		
+	
 	public static int getCount() {
 		return Count;
 	}
@@ -64,5 +61,11 @@ public class Room {
 		if (canHold(attendees))
 			return 0;
 		return capacity - attendees;
+	}
+	
+	@Override
+	public boolean equals(Object obj) { 
+		Room other = (Room) obj;
+		return (this.id == other.id);
 	}
 }
