@@ -1,14 +1,14 @@
 class Lesson
 {
     
-    String Type;              // Lecture / section / lab
-    String Name;              // subject Name
-    String Teacher;
-    String Place;             // class/section/lab
-    String Time; 
-    static int Count;
+    private String Type;              // Lecture / section / lab
+    private String Name;              // subject Name
+    private String Teacher;
+    private String Place;             // class/section/lab
+    private String Time; 
+    private static int Count;
 
-    Lesson(Course c,Teacher t,Hall hall,String time)    //Lecture
+    Lesson(Course c,Doctor t,Hall hall,String Time)    //Lecture
     {
         Type = "Lecture";
         Name = c.getName();
@@ -16,7 +16,7 @@ class Lesson
         Count++;
     }
     
-    Lesson(Course c,TA ta,Room r,Lab lab)                                          // section 
+    Lesson(Course c,TeachingAssistant ta,Room r,Lab lab,String Time)                                          // section 
     {
         Type = "section";
         Name = c.getName();
@@ -24,6 +24,11 @@ class Lesson
         Count++;
         
     }
+
+    public static int getCount() {
+        return Count;
+    }
+    
    
     
     
