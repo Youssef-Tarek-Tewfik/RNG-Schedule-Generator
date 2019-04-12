@@ -1,17 +1,9 @@
+package emotionalSupport;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Ahmed Hatem
- */
 public class Instructor
 {
     protected String ID,Name,Email,PhoneNumber;
@@ -24,15 +16,43 @@ public class Instructor
         this.Email = Email;
         this.PhoneNumber = PhoneNumber;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.ID);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Instructor other = (Instructor) obj;
+        if (!Objects.equals(this.ID, other.ID)) {
+            return false;
+        }
+        if (!Objects.equals(this.Email, other.Email)) {
+            return false;
+        }
+        return true;
+    }
     
    
     
     protected boolean AddCourse(Course NewCourse)
     {
-        boolean Present = MyCourses.containsKey(NewCourse.ID);
+        boolean Present = MyCourses.containsKey(NewCourse.getID());
         if(!Present)
         {
-            MyCourses.put(NewCourse.ID,NewCourse);
+            MyCourses.put(NewCourse.getID(),NewCourse);
             System.out.println("Added Course Successfully");
         }
         else
@@ -45,10 +65,10 @@ public class Instructor
     
     protected boolean RemoveCourse(Course RemovedCourse)
     {
-        boolean Present = MyCourses.containsKey(RemovedCourse.ID);
+        boolean Present = MyCourses.containsKey(RemovedCourse.getID());
         if(Present)
         {
-            MyCourses.remove(RemovedCourse.ID);
+            MyCourses.remove(RemovedCourse.getID());
             System.out.println("Removed Course Successfully");
         }
         else

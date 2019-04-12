@@ -34,6 +34,10 @@ public class Course {
 		this.lab = lab;    
     }
 
+    public String getID() {
+        return ID;
+    }
+
     public int getNo_of_lecs() {
         return No_of_lecs;
     }

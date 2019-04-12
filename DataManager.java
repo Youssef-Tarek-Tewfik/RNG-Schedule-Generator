@@ -1,3 +1,4 @@
+package emotionalSupport; 
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -64,16 +65,16 @@ public final class DataManager
                    System.out.println(CurrentDoctor.toString());
                    AllDoctors.put(CurrentDoctor.getID(),CurrentDoctor);
                }
-               else if(FileName.equals("TeachingAssistants.txt"))
+               else if(FileName.equals(Location + "TeachingAssistants.txt"))
                {
                   TeachingAssistant CurrentTeachingAssistant = new TeachingAssistant(Information[0],Information[1],Information[2],Information[3]);
                   AllTeachingAssistants.put(CurrentTeachingAssistant.getID(),CurrentTeachingAssistant);
                }
-               else if (FileName.equals("Courses.txt"))
+               else if (FileName.equals(Location + "Courses.txt"))
                {
                    
                }
-               else if(FileName.equals("Rooms.txt"))
+               else if(FileName.equals(Location + "Rooms.txt"))
                {
                    
                }
