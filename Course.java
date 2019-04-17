@@ -4,16 +4,17 @@ public class Course {
     private final String id;
     public final String name;
     
-    public Doctor doctor;
-    public TeachingAssistant ta[];
+    public String[] doctors;
+    public String[] tAs;
+    public String[] rooms;
     public LessonDetails details;
     
-    public Course(String id, String name, LessonDetails lessonDetails, Doctor doctor, TeachingAssistant[] TAs) {
+    public Course(String id, String name, LessonDetails lessonDetails, String[] doctors, String[] TAs, String[] rooms) {
 		this.id = id;
 		this.name = name;
 		this.details = lessonDetails;	
-		this.doctor = doctor;
-		this.ta = TAs;
+		this.doctors = doctors;
+		this.tAs = TAs;
     }
 
 	public String getID() {

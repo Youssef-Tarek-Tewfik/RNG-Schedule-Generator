@@ -1,4 +1,4 @@
-package emotionalSupport;
+/*package emotionalSupport;
 
 public class Block {
 	private boolean[] occupied;
@@ -31,3 +31,4 @@ public class Block {
 		occupied[r.getId()] = false;
 	}
 }
+*/
