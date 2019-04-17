@@ -18,11 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Ahmed Hatem
- */
+
 public class MainMenuController implements Initializable {
     
     
@@ -33,7 +29,7 @@ public class MainMenuController implements Initializable {
     @FXML
     void AddCourse()
     {
-         try
+        try
         {
             FXMLLoader WindowLoader = new FXMLLoader(getClass().getResource("AddCourses.fxml"));
             Parent root = WindowLoader.load();

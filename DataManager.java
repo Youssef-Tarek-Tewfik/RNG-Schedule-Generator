@@ -53,7 +53,7 @@ public final class DataManager
     
     private static void WriteRooms(String FileName)
     {
-          try 
+        try 
         {
             FileWriter MyFile = new FileWriter(FileName);
             BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
@@ -114,44 +114,6 @@ public final class DataManager
             }
             
             MyBufferedWriter.close();         
-        }
-        catch(FileNotFoundException ex)
-        {
-            System.out.println("Unable to open file '" + FileName + "'");                
-        }
-        catch(IOException ex) 
-        {
-            System.out.println("Error reading file '" + FileName + "'");                  
-        }
-    }
-    
-    public static void AddData(Object Data)
-    {
-        String FileName="";
-        
-        if(Data instanceof Doctor)
-        {
-            FileName = "Doctors.txt";
-        }
-        else if (Data instanceof TeachingAssistant)
-        {
-            FileName = "TeachingAssistants.txt";
-        }
-        else if(Data instanceof Course)
-        {
-            FileName = "Courses.txt";
-        }
-        else if(Data instanceof Room)
-        {
-            FileName= "Rooms.txt";
-        }
-        
-        try
-        {
-          FileWriter MyFile = new FileWriter(FileName,true);
-          BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
-          MyBufferedWriter.write(Data.toString()+ "\n");
-          MyBufferedWriter.close();
         }
         catch(FileNotFoundException ex)
         {
