@@ -48,6 +48,31 @@ public final class DataManager
     {
         WriteDoctors("Doctors.txt");
         WriteTAs("TeachingAssistants.txt");
+        WriteRooms("Rooms.txt");
+    }
+    
+    private static void WriteRooms(String FileName)
+    {
+          try 
+        {
+            FileWriter MyFile = new FileWriter(FileName);
+            BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+            
+            for(String CurrentRoom : AllRooms.keySet())
+            {
+                MyBufferedWriter.write(AllRooms.get(CurrentRoom).toString()+ "\n");
+            }
+            
+            MyBufferedWriter.close();         
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");                
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
     }
     
     private static void WriteDoctors(String FileName)
@@ -154,13 +179,13 @@ public final class DataManager
                
                if(FileName.equals("Doctors.txt"))
                {
-                   Doctor CurrentDoctor = new Doctor(Information[0],Information[1],Information[2],Information[3]);
+                   Doctor CurrentDoctor = new Doctor(Information[0],Information[1],Information[2]);
                    System.out.println(CurrentDoctor.toString());
                    AllDoctors.put(CurrentDoctor.getName(),CurrentDoctor);
                }
                else if(FileName.equals("TeachingAssistants.txt"))
                {
-                  TeachingAssistant CurrentTeachingAssistant = new TeachingAssistant(Information[0],Information[1],Information[2],Information[3]);
+                  TeachingAssistant CurrentTeachingAssistant = new TeachingAssistant(Information[0],Information[1],Information[2]);
                   AllTeachingAssistants.put(CurrentTeachingAssistant.getName(),CurrentTeachingAssistant);
                }
                else if (FileName.equals("Courses.txt"))

@@ -1,46 +1,40 @@
-package emotionalSupport;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package emotionalSupport;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
-import emotionalSupport.*;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 /**
  * FXML Controller class
  *
  * @author Ahmed Hatem
  */
-public class AddInstructorController implements Initializable
-{
-         
-   @FXML
+public class AddRoomController implements Initializable {
+    
+    
+    @FXML
+    private StackPane WarningPane;
+    
+    @FXML
     private JFXTextField NameText;
-
+    
     @FXML
-    private JFXTextField IDText;
-
-    @FXML
-    private JFXTextField EmailText;
-
-    @FXML
-    private JFXTextField PhoneText;
+    private JFXTextField CapacityText;
 
     @FXML
     private JFXButton Add;
@@ -48,20 +42,29 @@ public class AddInstructorController implements Initializable
     @FXML
     private JFXButton Cancel;
     
-    @FXML
-    private StackPane WarningPane;
+    static Room NewRoom;
     
-    static Instructor NewInstructor;
     
     @FXML
-    void AddInstructor()
-    {     
-      String Name, Email,Phone;
-      Name = NameText.getText().trim();
-      Email = EmailText.getText();
-      Phone = PhoneText.getText();
+    void AddRoom()
+    {
+      String Name;
+      int Capacity = 0;
+      boolean ValidCapacity;
+      Name = NameText.getText();
       
-      if( Name.trim().equals("") ||  Phone.trim().equals("") || Email.trim().equals(""))
+      try
+      {
+        Capacity = Integer.parseInt(CapacityText.getText());
+        ValidCapacity = true;
+      }
+      catch(Exception e)
+      {
+          ValidCapacity = false;
+      }
+      
+      
+      if( Name.trim().equals("") || !ValidCapacity )
       {
            JFXDialogLayout WarningLayout = new JFXDialogLayout();
            WarningLayout.setHeading(new Text("Missing Data"));
@@ -73,6 +76,7 @@ public class AddInstructorController implements Initializable
            Okay.setButtonType(JFXButton.ButtonType.RAISED);
            Okay.setStyle("-fx-background-color: #4527a0;-fx-text-fill:  #ffffff;");
            Okay.setPadding(new Insets(10, 15, 10, 15));
+           
            Okay.setOnAction(new EventHandler<ActionEvent>()
            {
                @Override
@@ -88,7 +92,7 @@ public class AddInstructorController implements Initializable
       }
       else
       {
-          NewInstructor = new Instructor(Name, Email, Phone);
+          NewRoom = new Room(Name, Capacity);
           Stage stage = (Stage) Add.getScene().getWindow();      
           stage.close();   
       }
@@ -98,23 +102,23 @@ public class AddInstructorController implements Initializable
     @FXML
     void Cancel()
     {
-      NewInstructor = null;
+      NewRoom = null;
       Stage stage = (Stage) Cancel.getScene().getWindow();      
       stage.close();   
     }
-
-    public static Instructor getInstructor()
+    
+    public static Room GetNewRoom()
     {
-        return NewInstructor;
+        return NewRoom;
     }
+    
     
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        //CurrentWindow = (Stage) Cancel.getScene().getWindow();
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
     }    
     
 }

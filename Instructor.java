@@ -6,12 +6,14 @@ import java.util.Objects;
 
 public class Instructor
 {
-    protected String ID,Name,Email,PhoneNumber;
+    protected String Name,Email,PhoneNumber;
+    int ID;
+    static int Count = DataManager.AllDoctors.size() + DataManager.AllTeachingAssistants.size();
     protected HashMap<String,Course>MyCourses;
 
-    public Instructor(String ID, String Name, String Email, String PhoneNumber)
+    public Instructor(String Name, String Email, String PhoneNumber)
     {
-        this.ID = ID;
+        ID = ++Count;
         this.Name = Name;
         this.Email = Email;
         this.PhoneNumber = PhoneNumber;
@@ -86,7 +88,7 @@ public class Instructor
         return Present;
     }
     
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
@@ -98,7 +100,7 @@ public class Instructor
         return Email;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -112,7 +114,7 @@ public class Instructor
 
     @Override
     public String toString() {
-        return ID + "/" + Name + "/" + Email + "/" + PhoneNumber ;
+        return Name + "/" + Email + "/" + PhoneNumber ;
     }
 
     public void setPhoneNumber(String PhoneNumber) {

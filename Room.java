@@ -13,7 +13,7 @@ public class Room {
 	private final int id;
 	private final int capacity;
 	protected Equipment equipment;	
-	private static int Count = 0;
+	private static int Count = DataManager.AllRooms.size();
 	
 	// This "Copy" constructor will NOT increment the count
 	/*public Room(Room room) {
@@ -30,9 +30,14 @@ public class Room {
             id = Count++;
 	}
 	
-	public Room(String name, int capacity) {
+	public Room(String name,int capacity) {
 		this(name, capacity, false);
 	}
+
+        @Override
+        public String toString() {
+            return name + "/" + capacity + "/" + id;
+        }
 	
 	public static int getCount() {
 		return Count;

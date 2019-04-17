@@ -125,6 +125,38 @@ public class EditDataController implements Initializable {
         
     }
     
+    public void AddRoom()
+    {
+        try
+        {
+            FXMLLoader WindowLoader = new FXMLLoader(getClass().getResource("AddRoom.fxml"));
+            Parent root = WindowLoader.load();
+            Stage stage = new Stage(); 
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("AddRoom");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            
+            Room NewRoom = AddRoomController.GetNewRoom();
+                              
+            if(NewRoom != null)
+            {
+                System.out.println(NewRoom.toString());
+                JFXCheckBox CheckBox = new JFXCheckBox(NewRoom.getName());
+                Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
+                CheckBox.setCheckedColor(CheckedColor);
+                Rooms.getItems().add(CheckBox); 
+                DataManager.AllRooms.put(NewRoom.getName(), NewRoom);
+            }
+                   
+            
+        }
+        catch(Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
+    }
+    
     @FXML
     public void Close()
     {
@@ -169,6 +201,14 @@ public class EditDataController implements Initializable {
         Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
         TACheckBox.setCheckedColor(CheckedColor);
         TeachingAssistants.getItems().add(TACheckBox);   
+      }
+      
+      for(Room CurrentRoom : DataManager.AllRooms.values())
+      {
+        JFXCheckBox CheckBox = new JFXCheckBox(CurrentRoom.getName());
+        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
+        CheckBox.setCheckedColor(CheckedColor);
+        Rooms.getItems().add(CheckBox);   
       }
        
        
