@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="636.0" prefWidth="897.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.AddCoursesController">
+    <children>
+      <JFXButton buttonType="RAISED" layoutX="550.0" layoutY="530.0" onAction="#AddCourse" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Add Course" textFill="WHITE" />
+      <JFXListView fx:id="Doctors" editable="true" layoutX="69.0" layoutY="148.0" prefHeight="296.0" prefWidth="214.0" style="-fx-selection-bar: #9575cd; -fx-control-inner-background: #e1bee7; -fx-background-color: #d1c4e9;" />
+      <JFXListView fx:id="TAs" editable="true" layoutX="340.0" layoutY="148.0" prefHeight="296.0" prefWidth="214.0" showTooltip="true" style="-fx-selection-bar: #9575cd; -fx-background-color: #d1c4e9; -fx-control-inner-background: #e1bee7;" />
+      <JFXButton fx:id="Cancel" buttonType="RAISED" layoutX="255.0" layoutY="530.0" onAction="#Cancel" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: #4527a0;" text="Cancel" textFill="WHITE" />
+      <Label layoutX="276.0" layoutY="36.0" text="Select the Course's Information" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="147.0" layoutY="108.0" text="Doctors" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="433.0" layoutY="108.0" text="TAs" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <JFXListView fx:id="Rooms" editable="true" layoutX="614.0" layoutY="148.0" prefHeight="296.0" prefWidth="214.0" showTooltip="true" style="-fx-selection-bar: #9575cd; -fx-background-color: #d1c4e9; -fx-control-inner-background: #e1bee7;" />
+      <Label layoutX="695.0" layoutY="108.0" text="Rooms" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
