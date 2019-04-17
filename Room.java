@@ -2,68 +2,61 @@ package emotionalSupport;
 
 import java.util.Objects;
 
-public class Room {
-	public enum Equipment {
+public class Room 
+{
+	public enum Equipment 
+	{
 		None,
 		Computers,
 		Electrical_Equipment
 	}
 	
 	protected String name;
-	private final int id;
+	//private final int id;
 	private final int capacity;
 	protected Equipment equipment;	
-	private static int Count = DataManager.AllRooms.size();
-	
-	// This "Copy" constructor will NOT increment the count
-	/*public Room(Room room) {
-		this.name = room.name;
-		this.capacity = room.capacity;
-		this.equipment = room.equipment;
-	}*/
+	//private static int Count = DataManager.AllRooms.size();
 
 	public Room(String name, int capacity, boolean hasPCs)
-        {
-            this.name = name;
-            this.capacity = capacity;
-            this.equipment = (hasPCs)? Equipment.Computers : Equipment.None;
-            id = Count++;
+    {
+        this.name = name;
+        this.capacity = capacity;
+        this.equipment = (hasPCs)? Equipment.Computers : Equipment.None;
+        //id = Count++;
 	}
 	
-	public Room(String name,int capacity) {
+	public Room(String name,int capacity)
+	{
 		this(name, capacity, false);
 	}
 
-        @Override
-        public String toString() {
-            return name + "/" + capacity + "/" + id;
-        }
-	
-	public static int getCount() {
-		return Count;
-	}
+    @Override
+    public String toString() 
+    {
+        return "R/" + name + "/" + capacity + "/" + equipment;
+    }
 
 	public boolean isPCReady() {
 		return (equipment == Equipment.Computers);
 	}
 	
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
 	
-	public int getCapacity() {
+	public int getCapacity() 
+	{
 		return capacity;
 	}
-	
-	public int getId() {
-		return id;
-	}
 
-	public boolean canHold(int attendees) {
+	public boolean canHold(int attendees) 
+	{
 		return (attendees <= capacity);
 	}
 	
-	public int forceFill(int attendees) {
+	public int forceFill(int attendees)
+	{
 		if (attendees <= 0)
 			return 0;
 		if (canHold(attendees))
@@ -79,22 +72,25 @@ public class Room {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object obj) 
+    {
+        if (this == obj)
+        {
             return true;
         }
-        if (obj == null) {
+        if (obj == null) 
+        {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass()) 
+        {
             return false;
         }
         final Room other = (Room) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.name, other.name)) 
+        {
             return false;
         }
         return true;
     }
-	
-	
 }

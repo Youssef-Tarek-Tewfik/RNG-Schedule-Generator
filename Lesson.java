@@ -2,13 +2,12 @@ package emotionalSupport;
 
 import java.util.Objects;
 
-
 public class Lesson
 {
     public enum LessonType
     {
-            Lecture,
-            Section
+        Lecture,
+        Section
     }
 	
     public LessonType lessonType;
@@ -64,17 +63,17 @@ public class Lesson
         return hash;
     }
 
-    public Lesson(Instructor instructor, Room room, TimePeriod TimeFrame)
+    public Lesson(Instructor instructor, Room room, TimePeriod TimeFrame, LessonType lessonType, Course course)
     {
         this.lessonType = lessonType;
-        //this.course = course;
+        this.course = course;
         this.instructor = instructor;
         this.room = room;
         this.TimeFrame = TimeFrame;
     }
 
-
-    public static int getCount() {
+    public static int getCount()
+    {
         return Count;
     }
 }

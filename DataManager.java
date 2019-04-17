@@ -2,6 +2,7 @@ package emotionalSupport;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -67,7 +68,17 @@ public final class DataManager
         }
         catch(FileNotFoundException ex)
         {
-            System.out.println("Unable to open file '" + FileName + "'");                
+            System.out.println("Unable to open file '" + FileName + "'");
+            File file = new File(FileName);
+            try 
+            {
+				file.createNewFile();
+				WriteRooms(FileName);
+				
+			} catch (IOException e)
+            {
+				System.out.println("Error Creating File");
+			}
         }
         catch(IOException ex) 
         {
@@ -92,7 +103,17 @@ public final class DataManager
         }
         catch(FileNotFoundException ex)
         {
-            System.out.println("Unable to open file '" + FileName + "'");                
+            System.out.println("Unable to open file '" + FileName + "'");
+            File file = new File(FileName);
+            try 
+            {
+				file.createNewFile();
+				WriteDoctors(FileName);
+				
+			} catch (IOException e)
+            {
+				System.out.println("Error Creating File");
+			}
         }
         catch(IOException ex) 
         {
@@ -100,11 +121,10 @@ public final class DataManager
         }
     }
     
-     private static void WriteTAs(String FileName)
+    private static void WriteTAs(String FileName)
     {
         try 
-        {
-      
+        {      
             FileWriter MyFile = new FileWriter(FileName);
             BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
             
@@ -117,7 +137,17 @@ public final class DataManager
         }
         catch(FileNotFoundException ex)
         {
-            System.out.println("Unable to open file '" + FileName + "'");                
+            System.out.println("Unable to open file '" + FileName + "'");   
+            File file = new File(FileName);
+            try 
+            {
+				file.createNewFile();
+				WriteTAs(FileName);
+				
+			} catch (IOException e)
+            {
+				System.out.println("Error Creating File");
+			}
         }
         catch(IOException ex) 
         {
@@ -125,6 +155,57 @@ public final class DataManager
         }
     }
     
+<<<<<<< HEAD
+=======
+    public static void AddData(Object Data)
+    {
+        String FileName="";
+        
+        if(Data instanceof Doctor)
+        {
+            FileName = "Doctors.txt";
+        }
+        else if (Data instanceof TeachingAssistant)
+        {
+            FileName = "TeachingAssistants.txt";
+        }
+        else if(Data instanceof Course)
+        {
+            FileName = "Courses.txt";
+        }
+        else if(Data instanceof Room)
+        {
+            FileName= "Rooms.txt";
+        }
+        
+        try
+        {
+          FileWriter MyFile = new FileWriter(FileName,true);
+          BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+          MyBufferedWriter.write(Data.toString()+ "\n");
+          MyBufferedWriter.close();
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");     
+            File file = new File(FileName);
+            try 
+            {
+				file.createNewFile();
+				AddData(Data);
+				
+			} catch (IOException e)
+            {
+				System.out.println("Error Creating File");
+			}
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
+    }
+    
+>>>>>>> origin/SomeBranch
     private static void ReadFile(String FileName)
     {
         String CurrentLine = null;
@@ -166,7 +247,17 @@ public final class DataManager
         }
         catch(FileNotFoundException ex)
         {
-            System.out.println("Unable to open file '" + FileName + "'");                
+            System.out.println("Unable to open file '" + FileName + "'");
+            File file = new File(FileName);
+            try 
+            {
+				file.createNewFile();
+				ReadFile(FileName);
+				
+			} catch (IOException e)
+            {
+				System.out.println("Error Creating File");
+			}
         }
         catch(IOException ex) 
         {
