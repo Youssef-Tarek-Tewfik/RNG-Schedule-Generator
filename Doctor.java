@@ -6,5 +6,9 @@ public class Doctor extends Instructor
     {
         super(ID, Name, Email, PhoneNumber);
     }
+    public Doctor(Instructor OtherInstructor)
+    {
+        super(OtherInstructor);
+    }
     
 }

@@ -6,4 +6,9 @@ public class TeachingAssistant extends Instructor
     {
         super(ID, Name, Email, PhoneNumber);
     }
+    
+    public TeachingAssistant(Instructor OtherInstructor)
+    {
+        super(OtherInstructor);
+    }
 }

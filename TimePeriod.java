@@ -10,7 +10,7 @@ public class TimePeriod
     float StartTime;
     float EndTime;
     String Day;
-
+    
     public TimePeriod(float StartTime, float EndTime, String Day)
     {
         this.StartTime = StartTime;

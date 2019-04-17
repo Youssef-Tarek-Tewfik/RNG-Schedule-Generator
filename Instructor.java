@@ -44,6 +44,14 @@ public class Instructor
         }
         return true;
     }
+
+    public Instructor(Instructor OtherInstructor) {
+        this.ID = OtherInstructor.ID;
+        this.Name = OtherInstructor.Name;
+        this.Email = OtherInstructor.Email;
+        this.PhoneNumber = OtherInstructor.PhoneNumber;
+        this.MyCourses = OtherInstructor.MyCourses;
+    }
     
    
     
@@ -104,7 +112,7 @@ public class Instructor
 
     @Override
     public String toString() {
-        return "Instructor{" + "ID=" + ID + ", Name=" + Name + ", Email=" + Email + ", PhoneNumber=" + PhoneNumber + '}';
+        return ID + "/" + Name + "/" + Email + "/" + PhoneNumber ;
     }
 
     public void setPhoneNumber(String PhoneNumber) {

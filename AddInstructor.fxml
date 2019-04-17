@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="533.0" prefWidth="765.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.AddInstructorController">
+   <children>
+      <JFXTextField fx:id="Name" focusColor="WHITE" labelFloat="true" layoutX="65.0" layoutY="86.0" promptText="Name" style="-fx-prompt-text-fill: White; -fx-text-fill: White;" unFocusColor="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="ID" focusColor="WHITE" labelFloat="true" layoutX="467.0" layoutY="86.0" promptText="ID" style="-fx-prompt-text-fill: White; -fx-text-fill: White;" unFocusColor="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="Email" focusColor="WHITE" labelFloat="true" layoutX="65.0" layoutY="267.0" promptText="Email" style="-fx-prompt-text-fill: White; -fx-text-fill: White;" unFocusColor="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="Phone" focusColor="WHITE" labelFloat="true" layoutX="467.0" layoutY="267.0" promptText="Phone" style="-fx-prompt-text-fill: White; -fx-text-fill: White;" unFocusColor="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="Add" layoutX="436.0" layoutY="421.0" onAction="#AddInstructor" prefHeight="50.0" prefWidth="80.0" style="-fx-background-color: #4527a0;" text="Add" textFill="WHITE" />
+      <JFXButton fx:id="Cancel" layoutX="205.0" layoutY="421.0" onAction="#Cancel" prefHeight="50.0" prefWidth="80.0" style="-fx-background-color: #4527a0;" text="Cancel" textFill="WHITE" />
+   </children>
+</AnchorPane>

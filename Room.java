@@ -67,7 +67,8 @@ public class Room {
 	}
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 5;
         return hash;
     }
