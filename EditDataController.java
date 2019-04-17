@@ -176,6 +176,15 @@ public class EditDataController implements Initializable {
               DataManager.AllDoctors.remove(CurrentDoctor.getText());
           }
       }
+      
+      for(JFXCheckBox CurrentRoom : Rooms.getItems())
+      {
+          if(CurrentRoom.isSelected())
+          {
+              DataManager.AllRooms.remove(CurrentRoom.getText());
+          }
+      }
+      
       DataManager.ReWriteAllData();
       Stage stage = (Stage)Doctors.getScene().getWindow();      
       stage.close();   
@@ -184,9 +193,7 @@ public class EditDataController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-       DataManager.Intialize();
-       DataManager.ReadData();
-
+        
       for(Doctor CurrentDoctor :DataManager.AllDoctors.values() )
       {
         JFXCheckBox DoctorCheckBox = new JFXCheckBox(CurrentDoctor.getName());

@@ -20,10 +20,12 @@ public class DriverClass extends Application {
     
     @Override
     public void start(Stage stage) throws Exception 
-    {
-        Parent root = FXMLLoader.load(getClass().getResource("EditData.fxml"));        
+    {   
+        DataManager.Intialize();
+        DataManager.ReadData();
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));        
         Scene scene = new Scene(root);
-        stage.setTitle("EditData");
+        stage.setTitle("Time Table Generator");
         stage.setScene(scene);
         stage.show();
     }
