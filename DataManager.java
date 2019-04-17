@@ -1,8 +1,10 @@
 package emotionalSupport; 
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -18,11 +20,10 @@ import java.util.HashMap;
  */
 public final class DataManager
 {
-    private static String Location;
-    static HashMap<String,Course>AllCourses;
-    static HashMap<String,Doctor>AllDoctors;
-    static HashMap<String,TeachingAssistant>AllTeachingAssistants;
-    static HashMap<String,Room>AllRooms;
+    public static HashMap<String,Course>AllCourses;
+    public static HashMap<String,Doctor>AllDoctors;
+    public static HashMap<String,TeachingAssistant>AllTeachingAssistants;
+    public static HashMap<String,Room>AllRooms;
         
     private DataManager()
     {       
@@ -35,13 +36,131 @@ public final class DataManager
         AllTeachingAssistants = new HashMap<String,TeachingAssistant>();
         AllRooms = new HashMap<String,Room>();
     }
-    public static void ReadData(String Path)
+    public static void ReadData()
     {
-        Location = Path;
-        ReadFile(Location + "Doctors.txt");
-        ReadFile(Location + "TeachingAssistants.txt");
-        ReadFile(Location + "Courses.txt");
-        ReadFile(Location + "Rooms.txt");
+        ReadFile("Doctors.txt");
+        ReadFile("TeachingAssistants.txt");
+        ReadFile("Courses.txt");
+        ReadFile("Rooms.txt");
+    }
+    
+    public static void ReWriteAllData()
+    {
+        WriteDoctors("Doctors.txt");
+        WriteTAs("TeachingAssistants.txt");
+        WriteRooms("Rooms.txt");
+    }
+    
+    private static void WriteRooms(String FileName)
+    {
+          try 
+        {
+            FileWriter MyFile = new FileWriter(FileName);
+            BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+            
+            for(String CurrentRoom : AllRooms.keySet())
+            {
+                MyBufferedWriter.write(AllRooms.get(CurrentRoom).toString()+ "\n");
+            }
+            
+            MyBufferedWriter.close();         
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");                
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
+    }
+    
+    private static void WriteDoctors(String FileName)
+    {
+        try 
+        {
+      
+            FileWriter MyFile = new FileWriter(FileName);
+            BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+            
+            for(String CurrentDoctor : AllDoctors.keySet())
+            {
+                MyBufferedWriter.write(AllDoctors.get(CurrentDoctor).toString()+ "\n");
+            }
+            
+            MyBufferedWriter.close();         
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");                
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
+    }
+    
+     private static void WriteTAs(String FileName)
+    {
+        try 
+        {
+      
+            FileWriter MyFile = new FileWriter(FileName);
+            BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+            
+            for(String CurrentDoctor : AllTeachingAssistants.keySet())
+            {
+                MyBufferedWriter.write(AllTeachingAssistants.get(CurrentDoctor).toString()+ "\n");
+            }
+            
+            MyBufferedWriter.close();         
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");                
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
+    }
+    
+    public static void AddData(Object Data)
+    {
+        String FileName="";
+        
+        if(Data instanceof Doctor)
+        {
+            FileName = "Doctors.txt";
+        }
+        else if (Data instanceof TeachingAssistant)
+        {
+            FileName = "TeachingAssistants.txt";
+        }
+        else if(Data instanceof Course)
+        {
+            FileName = "Courses.txt";
+        }
+        else if(Data instanceof Room)
+        {
+            FileName= "Rooms.txt";
+        }
+        
+        try
+        {
+          FileWriter MyFile = new FileWriter(FileName,true);
+          BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+          MyBufferedWriter.write(Data.toString()+ "\n");
+          MyBufferedWriter.close();
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");                
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
     }
     
     private static void ReadFile(String FileName)
@@ -49,39 +168,38 @@ public final class DataManager
         String CurrentLine = null;
         try 
         {
-            // FileReader reads text files in the default encoding.
+      
             FileReader MyReader = new FileReader(FileName);
 
-            // Always wrap FileReader in BufferedReader.
             BufferedReader MyBufferedReader = new BufferedReader(MyReader);
 
             while((CurrentLine = MyBufferedReader.readLine()) != null)
             {
                String []Information= CurrentLine.split("/");
                
-               if(FileName.equals(Location + "Doctors.txt"))
+               if(FileName.equals("Doctors.txt"))
                {
-                   Doctor CurrentDoctor = new Doctor(Information[0],Information[1],Information[2],Information[3]);
+                   Doctor CurrentDoctor = new Doctor(Information[0],Information[1],Information[2]);
                    System.out.println(CurrentDoctor.toString());
-                   AllDoctors.put(CurrentDoctor.getID(),CurrentDoctor);
+                   AllDoctors.put(CurrentDoctor.getName(),CurrentDoctor);
                }
-               else if(FileName.equals(Location + "TeachingAssistants.txt"))
+               else if(FileName.equals("TeachingAssistants.txt"))
                {
-                  TeachingAssistant CurrentTeachingAssistant = new TeachingAssistant(Information[0],Information[1],Information[2],Information[3]);
-                  AllTeachingAssistants.put(CurrentTeachingAssistant.getID(),CurrentTeachingAssistant);
+                  TeachingAssistant CurrentTeachingAssistant = new TeachingAssistant(Information[0],Information[1],Information[2]);
+                  AllTeachingAssistants.put(CurrentTeachingAssistant.getName(),CurrentTeachingAssistant);
                }
-               else if (FileName.equals(Location + "Courses.txt"))
-               {
-                   
-               }
-               else if(FileName.equals(Location + "Rooms.txt"))
+               else if (FileName.equals("Courses.txt"))
                {
                    
+               }
+               else if(FileName.equals("Rooms.txt"))
+               {
+                   Room CurrentRoom  = new Room(Information[0], 4);
+                   AllRooms.put(Information[0], CurrentRoom);
                }
                
             }   
 
-            // Always close files.
             MyBufferedReader.close();         
         }
         catch(FileNotFoundException ex)

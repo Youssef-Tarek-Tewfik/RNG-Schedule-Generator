@@ -2,9 +2,13 @@ package emotionalSupport;
 
 public class Doctor extends Instructor
 {
-    public Doctor(String ID, String Name, String Email, String PhoneNumber)
+    public Doctor(String Name, String Email, String PhoneNumber)
     {
-        super(ID, Name, Email, PhoneNumber);
+        super(Name, Email, PhoneNumber);
+    }
+    public Doctor(Instructor OtherInstructor)
+    {
+        super(OtherInstructor);
     }
     
 }
