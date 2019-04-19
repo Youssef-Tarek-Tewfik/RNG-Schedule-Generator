@@ -11,9 +11,9 @@ public class Lesson
     }
 	
     public LessonType lessonType;
-    public Course course;
-    public Instructor instructor;
-    public Room room;
+    public String CourseName;
+    public String instructor;
+    public String room;
     public TimePeriod TimeFrame;
     private static int Count = 0;
 
@@ -34,7 +34,11 @@ public class Lesson
         }
         final Lesson other = (Lesson) obj;
         
-        if (!this.room.equals(other.room) && !this.instructor.equals(other.instructor))
+        if((this.lessonType == LessonType.Lecture || other.lessonType == LessonType.Lecture) && this.TimeFrame.equals(other.TimeFrame))
+        {
+            return true;
+        }
+        else if (!this.room.equals(other.room) && !this.instructor.equals(other.instructor))
         {
             return false;
         }
@@ -56,22 +60,36 @@ public class Lesson
     {
         int hash = 5;
         hash = 59 * hash + Objects.hashCode(this.lessonType);
-        hash = 59 * hash + Objects.hashCode(this.course);
+        hash = 59 * hash + Objects.hashCode(this.CourseName);
         hash = 59 * hash + Objects.hashCode(this.instructor);
         hash = 59 * hash + Objects.hashCode(this.room);
         hash = 59 * hash + Objects.hashCode(this.TimeFrame);
         return hash;
     }
 
-    public Lesson(Instructor instructor, Room room, TimePeriod TimeFrame, LessonType lessonType, Course course)
+    public Lesson(String instructor, String room, TimePeriod TimeFrame, LessonType lessonType, String course)
     {
         this.lessonType = lessonType;
-        this.course = course;
+        this.CourseName = course;
         this.instructor = instructor;
         this.room = room;
         this.TimeFrame = TimeFrame;
     }
-
+    @Override
+    public String toString()
+    {
+        if(TimeFrame.StartTime > 12)
+        {
+            TimeFrame.StartTime -=12;
+        }
+        if(TimeFrame.EndTime > 12)
+        {
+            TimeFrame.EndTime -=12;
+        }
+        return("Name : " + CourseName +"\nStartTime : " + TimeFrame.StartTime + "\nEndTime : "
+                + TimeFrame.EndTime + "\nType : " + lessonType + "\nInstructor : " + instructor + "\nRoom : " + room);
+    }
+    
     public static int getCount()
     {
         return Count;

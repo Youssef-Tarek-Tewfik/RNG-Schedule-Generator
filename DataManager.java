@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /*
@@ -50,6 +51,7 @@ public final class DataManager
         WriteDoctors("Doctors.txt");
         WriteTAs("TeachingAssistants.txt");
         WriteRooms("Rooms.txt");
+        WriteCourses("Courses.txt");
     }
     
     private static void WriteRooms(String FileName)
@@ -72,13 +74,14 @@ public final class DataManager
             File file = new File(FileName);
             try 
             {
-				file.createNewFile();
-				WriteRooms(FileName);
+                file.createNewFile();
+                WriteRooms(FileName);
 				
-			} catch (IOException e)
+            } 
+            catch (IOException e)
             {
-				System.out.println("Error Creating File");
-			}
+                System.out.println("Error Creating File");
+            }
         }
         catch(IOException ex) 
         {
@@ -107,13 +110,14 @@ public final class DataManager
             File file = new File(FileName);
             try 
             {
-				file.createNewFile();
-				WriteDoctors(FileName);
+		file.createNewFile();
+		WriteDoctors(FileName);
 				
-			} catch (IOException e)
+            }
+            catch (IOException e)
             {
-				System.out.println("Error Creating File");
-			}
+                System.out.println("Error Creating File");
+            }
         }
         catch(IOException ex) 
         {
@@ -141,13 +145,14 @@ public final class DataManager
             File file = new File(FileName);
             try 
             {
-				file.createNewFile();
-				WriteTAs(FileName);
+		file.createNewFile();
+		WriteTAs(FileName);
 				
-			} catch (IOException e)
+            }
+            catch (IOException e)
             {
-				System.out.println("Error Creating File");
-			}
+		System.out.println("Error Creating File");
+            }
         }
         catch(IOException ex) 
         {
@@ -155,49 +160,31 @@ public final class DataManager
         }
     }
     
-<<<<<<< HEAD
-=======
-    public static void AddData(Object Data)
-    {
-        String FileName="";
-        
-        if(Data instanceof Doctor)
-        {
-            FileName = "Doctors.txt";
-        }
-        else if (Data instanceof TeachingAssistant)
-        {
-            FileName = "TeachingAssistants.txt";
-        }
-        else if(Data instanceof Course)
-        {
-            FileName = "Courses.txt";
-        }
-        else if(Data instanceof Room)
-        {
-            FileName= "Rooms.txt";
-        }
-        
-        try
-        {
-          FileWriter MyFile = new FileWriter(FileName,true);
-          BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
-          MyBufferedWriter.write(Data.toString()+ "\n");
-          MyBufferedWriter.close();
+    public static void AddCourseToFile(Course NewCourse,String FileName)
+    {      
+        try 
+        {      
+            FileWriter MyFile = new FileWriter(FileName,true);
+            BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+            
+            MyBufferedWriter.write(NewCourse.toString()+"\n");
+            
+            MyBufferedWriter.close();         
         }
         catch(FileNotFoundException ex)
         {
-            System.out.println("Unable to open file '" + FileName + "'");     
+            System.out.println("Unable to open file '" + FileName + "'");   
             File file = new File(FileName);
             try 
             {
-				file.createNewFile();
-				AddData(Data);
+		file.createNewFile();
+		AddCourseToFile(NewCourse,FileName);
 				
-			} catch (IOException e)
+            }
+            catch (IOException e)
             {
-				System.out.println("Error Creating File");
-			}
+		System.out.println("Error Creating File");
+            }
         }
         catch(IOException ex) 
         {
@@ -205,7 +192,42 @@ public final class DataManager
         }
     }
     
->>>>>>> origin/SomeBranch
+    public static void WriteCourses(String FileName)
+    {
+        try 
+        {      
+            FileWriter MyFile = new FileWriter(FileName);
+            BufferedWriter MyBufferedWriter = new BufferedWriter(MyFile);
+            
+            for(String CurrentCourse : AllCourses.keySet())
+            {
+                MyBufferedWriter.write(AllCourses.get(CurrentCourse).toString()+ "\n");
+            }
+            
+            MyBufferedWriter.close();         
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println("Unable to open file '" + FileName + "'");   
+            File file = new File(FileName);
+            try 
+            {
+		file.createNewFile();
+		WriteCourses(FileName);
+				
+            }
+            catch (IOException e)
+            {
+		System.out.println("Error Creating File");
+            }
+        }
+        catch(IOException ex) 
+        {
+            System.out.println("Error reading file '" + FileName + "'");                  
+        }
+    }
+    
+    
     private static void ReadFile(String FileName)
     {
         String CurrentLine = null;
@@ -223,7 +245,6 @@ public final class DataManager
                if(FileName.equals("Doctors.txt"))
                {
                    Doctor CurrentDoctor = new Doctor(Information[0],Information[1],Information[2]);
-                   System.out.println(CurrentDoctor.toString());
                    AllDoctors.put(CurrentDoctor.getName(),CurrentDoctor);
                }
                else if(FileName.equals("TeachingAssistants.txt"))
@@ -233,12 +254,35 @@ public final class DataManager
                }
                else if (FileName.equals("Courses.txt"))
                {
-                   
+                   String Name = Information[0];
+                   LessonDetails Details;                 
+                   ArrayList<String> Doctors = new ArrayList<String>();
+                   ArrayList<String> TAs = new ArrayList<String>();
+                   ArrayList<String> Rooms = new ArrayList<String>();
+                   String []DetailInfo = Information[1].split("-");
+                   String []DoctorNames = Information[2].split("!");
+                   String []TANames = Information[3].split("@");
+                   String []RoomNames = Information[4].split("#");
+                   Details = new LessonDetails(Integer.parseInt(DetailInfo[0]),Integer.parseInt(DetailInfo[1]), Float.parseFloat(DetailInfo[2]), Float.parseFloat(DetailInfo[3]));
+                   for(String CurrentDoctor : DoctorNames)
+                   {
+                       Doctors.add(CurrentDoctor);
+                   }
+                   for(String CurrentTA : TANames)
+                   {
+                       TAs.add(CurrentTA);
+                   }
+                   for(String CurrentRoom : RoomNames)
+                   {
+                        Rooms.add(CurrentRoom);
+                   }
+                   Course CurrentCourse = new Course(Name, Details, Doctors, TAs, Rooms);
+                   AllCourses.put(Name, CurrentCourse);
                }
                else if(FileName.equals("Rooms.txt"))
                {
-                   Room CurrentRoom  = new Room(Information[0], 4);
-                   AllRooms.put(Information[0], CurrentRoom);
+                   Room CurrentRoom  = new Room(Information[1], 4);
+                   AllRooms.put(Information[1], CurrentRoom);
                }
                
             }   
@@ -251,13 +295,14 @@ public final class DataManager
             File file = new File(FileName);
             try 
             {
-				file.createNewFile();
-				ReadFile(FileName);
+                file.createNewFile();
+                ReadFile(FileName);
 				
-			} catch (IOException e)
+            } 
+            catch (IOException e)
             {
-				System.out.println("Error Creating File");
-			}
+                System.out.println("Error Creating File");
+            }
         }
         catch(IOException ex) 
         {

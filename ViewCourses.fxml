@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="505.0" prefWidth="455.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.ViewCoursesController">
+   <children>
+      <JFXButton fx:id="Close" buttonType="RAISED" layoutX="174.0" layoutY="425.0" onAction="#Cancel" prefHeight="50.0" prefWidth="108.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Save" textFill="WHITE" />
+      <Label layoutX="95.0" layoutY="29.0" text="Select a course to delete" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <JFXListView fx:id="Courses" editable="true" layoutX="47.0" layoutY="85.0" prefHeight="296.0" prefWidth="362.0" style="-fx-selection-bar: #9575cd; -fx-control-inner-background: #e1bee7; -fx-background-color: #d1c4e9;" />
+   </children>
+</AnchorPane>

@@ -10,15 +10,9 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
@@ -42,8 +36,10 @@ public class AddRoomController implements Initializable {
     @FXML
     private JFXButton Cancel;
     
-    static Room NewRoom;
+    @FXML
+    private JFXComboBox<String> RoomType;
     
+    static Room NewRoom;
     
     @FXML
     void AddRoom()
@@ -61,40 +57,20 @@ public class AddRoomController implements Initializable {
       catch(Exception e)
       {
           ValidCapacity = false;
-      }
-      
+      }     
       
       if( Name.trim().equals("") || !ValidCapacity )
+      {    
+        WindowManager.ShowWarning(WarningPane);
+      }
+      else if(DataManager.AllRooms.containsKey(Name.toLowerCase()))
       {
-           JFXDialogLayout WarningLayout = new JFXDialogLayout();
-           WarningLayout.setHeading(new Text("Missing Data"));
-           WarningLayout.setBody(new Text("Please fill all the required data"));
-           //WarningLayout.setStyle(Name);
-           JFXDialog Warning = new JFXDialog(WarningPane, WarningLayout, JFXDialog.DialogTransition.CENTER, true);
-           
-           JFXButton Okay = new JFXButton("Ok");
-           Okay.setButtonType(JFXButton.ButtonType.RAISED);
-           Okay.setStyle("-fx-background-color: #4527a0;-fx-text-fill:  #ffffff;");
-           Okay.setPadding(new Insets(10, 15, 10, 15));
-           
-           Okay.setOnAction(new EventHandler<ActionEvent>()
-           {
-               @Override
-               public void handle(ActionEvent event)
-               {
-                   Warning.close();
-               }
-           });
-           
-           WarningLayout.setActions(Okay);
-           Warning.show();
-           
+          WindowManager.ShowWarning(WarningPane, "Duplicate Data", "The room is already added");
       }
       else
       {
           NewRoom = new Room(Name, Capacity);
-          Stage stage = (Stage) Add.getScene().getWindow();      
-          stage.close();   
+          WindowManager.CloseWindow(Add);
       }
       
     }
@@ -103,8 +79,7 @@ public class AddRoomController implements Initializable {
     void Cancel()
     {
       NewRoom = null;
-      Stage stage = (Stage) Cancel.getScene().getWindow();      
-      stage.close();   
+      WindowManager.CloseWindow(Cancel);
     }
     
     public static Room GetNewRoom()
@@ -117,8 +92,11 @@ public class AddRoomController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        RoomType.getItems().add("Hall");
+        RoomType.getItems().add("Lab");
+        
     }    
     
 }

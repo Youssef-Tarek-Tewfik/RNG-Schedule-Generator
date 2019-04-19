@@ -6,20 +6,11 @@ package emotionalSupport;
  * and open the template in the editor.
  */
 import com.jfoenix.controls.*;
-import emotionalSupport.*;
-import java.awt.Color;
-import javafx.scene.paint.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.stage.Modality;
+
 /**
  *
  * @author Ahmed Hatem
@@ -59,101 +50,44 @@ public class EditDataController implements Initializable {
     @FXML
     public void AddTA()
     {
-        try
+        AddInstructorController.SetType("TA");
+        WindowManager.OpenWindow(this, "AddInstructor");
+                                            
+        if(AddInstructorController.getInstructor() != null)
         {
-            FXMLLoader WindowLoader = new FXMLLoader(getClass().getResource("AddInstructor.fxml"));
-            Parent root = WindowLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("AddTA");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            
             TeachingAssistant NewTA = new TeachingAssistant(AddInstructorController.getInstructor());
-                                
-            if(NewTA != null)
-            {
-                System.out.println(NewTA.toString());
-                JFXCheckBox InstructorCheckBox = new JFXCheckBox(NewTA.getName());
-                Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-                InstructorCheckBox.setCheckedColor(CheckedColor);
-                TeachingAssistants.getItems().add(InstructorCheckBox); 
-                DataManager.AllTeachingAssistants.put(NewTA.getName(), NewTA);
-            }
-                   
-            
-        }
-        catch(Exception e)
-        {
-            System.err.println(e.getMessage());
+            TeachingAssistants.getItems().add(WindowManager.CreateCheckBox(NewTA.getName())); 
+            DataManager.AllTeachingAssistants.put(NewTA.getName().toLowerCase(), NewTA);
         }
         
     }
     
     
     @FXML
-    public void AddInstructor()
+    public void AddDoctor()
     {
-        try
+        AddInstructorController.SetType("Doctor");
+        WindowManager.OpenWindow(this, "AddInstructor");
+                                   
+        if(AddInstructorController.getInstructor() != null)
         {
-            FXMLLoader WindowLoader = new FXMLLoader(getClass().getResource("AddInstructor.fxml"));
-            Parent root = WindowLoader.load();
-            Stage stage = new Stage(); 
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("AddDoctor");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            
-            Doctor NewDoctor = new Doctor(AddInstructorController.getInstructor());
-                              
-            if(NewDoctor != null)
-            {
-                System.out.println(NewDoctor.toString());
-                JFXCheckBox InstructorCheckBox = new JFXCheckBox(NewDoctor.getName());
-                Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-                InstructorCheckBox.setCheckedColor(CheckedColor);
-                Doctors.getItems().add(InstructorCheckBox); 
-                DataManager.AllDoctors.put(NewDoctor.getName(), NewDoctor);
-            }
-                   
-            
+            Doctor NewDoctor =  new Doctor(AddInstructorController.getInstructor());
+            Doctors.getItems().add(WindowManager.CreateCheckBox(NewDoctor.getName())); 
+            DataManager.AllDoctors.put(NewDoctor.getName().toLowerCase(), NewDoctor);
         }
-        catch(Exception e)
-        {
-            System.err.println(e.getMessage());
-        }
-        
     }
     
+    @FXML
     public void AddRoom()
     {
-        try
-        {
-            FXMLLoader WindowLoader = new FXMLLoader(getClass().getResource("AddRoom.fxml"));
-            Parent root = WindowLoader.load();
-            Stage stage = new Stage(); 
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("AddRoom");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            
-            Room NewRoom = AddRoomController.GetNewRoom();
+        WindowManager.OpenWindow(this, "AddRoom");
+        
+        Room NewRoom = AddRoomController.GetNewRoom();
                               
-            if(NewRoom != null)
-            {
-                System.out.println(NewRoom.toString());
-                JFXCheckBox CheckBox = new JFXCheckBox(NewRoom.getName());
-                Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-                CheckBox.setCheckedColor(CheckedColor);
-                Rooms.getItems().add(CheckBox); 
-                DataManager.AllRooms.put(NewRoom.getName(), NewRoom);
-            }
-                   
-            
-        }
-        catch(Exception e)
+        if(NewRoom != null)
         {
-            System.err.println(e.getMessage());
+            Rooms.getItems().add(WindowManager.CreateCheckBox(NewRoom.getName())); 
+            DataManager.AllRooms.put(NewRoom.getName().toLowerCase(), NewRoom);
         }
     }
     
@@ -162,63 +96,36 @@ public class EditDataController implements Initializable {
     {
       for(JFXCheckBox CurrentTA : TeachingAssistants.getItems())
       {
-          if(CurrentTA.isSelected())
-          {
-              System.out.println(CurrentTA.getText());
-              DataManager.AllTeachingAssistants.remove(CurrentTA.getText());
-          }
+        if(CurrentTA.isSelected())
+        {
+          DataManager.AllTeachingAssistants.remove(CurrentTA.getText());
+        }
       }
       
       for(JFXCheckBox CurrentDoctor : Doctors.getItems())
       {
-          if(CurrentDoctor.isSelected())
-          {
-              DataManager.AllDoctors.remove(CurrentDoctor.getText());
-          }
+        if(CurrentDoctor.isSelected())
+        {
+          DataManager.AllDoctors.remove(CurrentDoctor.getText());
+        }
       }
       
       for(JFXCheckBox CurrentRoom : Rooms.getItems())
       {
-          if(CurrentRoom.isSelected())
-          {
-              DataManager.AllRooms.remove(CurrentRoom.getText());
-          }
+        if(CurrentRoom.isSelected())
+        {
+          DataManager.AllRooms.remove(CurrentRoom.getText());
+        }
       }
       
       DataManager.ReWriteAllData();
-      Stage stage = (Stage)Doctors.getScene().getWindow();      
-      stage.close();   
+      WindowManager.CloseWindow(Save);
     }
    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        
-      for(Doctor CurrentDoctor :DataManager.AllDoctors.values() )
-      {
-        JFXCheckBox DoctorCheckBox = new JFXCheckBox(CurrentDoctor.getName());
-        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-        DoctorCheckBox.setCheckedColor(CheckedColor);
-        Doctors.getItems().add(DoctorCheckBox);   
-      }
-      
-      for(TeachingAssistant CurrentTA : DataManager.AllTeachingAssistants.values())
-      {
-        JFXCheckBox TACheckBox = new JFXCheckBox(CurrentTA.getName());
-        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-        TACheckBox.setCheckedColor(CheckedColor);
-        TeachingAssistants.getItems().add(TACheckBox);   
-      }
-      
-      for(Room CurrentRoom : DataManager.AllRooms.values())
-      {
-        JFXCheckBox CheckBox = new JFXCheckBox(CurrentRoom.getName());
-        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-        CheckBox.setCheckedColor(CheckedColor);
-        Rooms.getItems().add(CheckBox);   
-      }
-       
-       
+        WindowManager.IntializeListsData(Doctors, TeachingAssistants, Rooms);
     }    
     
 }

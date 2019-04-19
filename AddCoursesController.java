@@ -7,21 +7,14 @@ package emotionalSupport;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -58,109 +51,92 @@ public class AddCoursesController implements Initializable {
     @FXML
     private JFXTextField SectionHoursText;
     
+    
+    @FXML
+    private JFXTextField Name;
+    
     @FXML
     void AddCourse()
     {
+       String CourseName = Name.getText();
+       if(DataManager.AllCourses.containsKey(CourseName.toLowerCase()))
+       {
+           WindowManager.ShowWarning(WarningPane, "Duplicate Data", "The Course is already added");
+           return;
+       }
        int LecturesNumber ,LecturesHours,SectionsNumber,SectionHours;
+       ArrayList<String> DoctorNames = new ArrayList<String>();
+       ArrayList<String> TANames = new ArrayList<String>();
+       ArrayList<String> RoomNames = new ArrayList<String>();
+       LessonDetails CourseDetails = null;
        try
        {
            LecturesNumber = Integer.parseInt(LecturesNumberText.getText());
            LecturesHours = Integer.parseInt(LecturesHoursText.getText());
            SectionsNumber = Integer.parseInt(SectionsNumberText.getText());
            SectionHours = Integer.parseInt(SectionHoursText.getText());
+           CourseDetails = new LessonDetails(LecturesNumber, SectionsNumber, LecturesHours, SectionHours);
        }
        catch(Exception e)
        {
-           WarningPane.setDisable(false);
-           JFXDialogLayout WarningLayout = new JFXDialogLayout();
-           WarningLayout.setHeading(new Text("Missing Data"));
-           WarningLayout.setBody(new Text("Please fill all the required data"));
-           //WarningLayout.setStyle(Name);
-           JFXDialog Warning = new JFXDialog(WarningPane, WarningLayout, JFXDialog.DialogTransition.CENTER, true);
-           //Warning.
-           JFXButton Okay = new JFXButton("Ok");
-           Okay.setButtonType(JFXButton.ButtonType.RAISED);
-           Okay.setStyle("-fx-background-color: #4527a0;-fx-text-fill:  #ffffff;");
-           Okay.setPadding(new Insets(10, 15, 10, 15));
-           
-           Okay.setOnAction(new EventHandler<ActionEvent>()
-           {
-               @Override
-               public void handle(ActionEvent event)
-               {
-                   Warning.close();
-                   WarningPane.setDisable(true);
-               }
-           });
-           
-           WarningLayout.setActions(Okay);
-           Warning.show();
+           WindowManager.ShowWarning(WarningPane);
+           return;
        }
-       //Course 
-        
-      for(JFXCheckBox CurrentTA : TAs.getItems())
-      {
+      
+      
+        for(JFXCheckBox CurrentTA : TAs.getItems())
+        {
           if(CurrentTA.isSelected())
           {
-              System.out.println(CurrentTA.getText());
-              DataManager.AllTeachingAssistants.remove(CurrentTA.getText());
+            TANames.add(CurrentTA.getText());
           }
-      }
-      
-      for(JFXCheckBox CurrentDoctor : Doctors.getItems())
-      {
+        }
+
+        for(JFXCheckBox CurrentDoctor : Doctors.getItems())
+        {
           if(CurrentDoctor.isSelected())
           {
-              DataManager.AllDoctors.remove(CurrentDoctor.getText());
+             DoctorNames.add((CurrentDoctor.getText()));
           }
-      }
-      
-      for(JFXCheckBox CurrentRoom : Rooms.getItems())
-      {
+        }
+
+        for(JFXCheckBox CurrentRoom : Rooms.getItems())
+        {
           if(CurrentRoom.isSelected())
           {
-              DataManager.AllRooms.remove(CurrentRoom.getText());
+            RoomNames.add(CurrentRoom.getText());
           }
-      }
-      
-      //DataManager.AllCourses.put(key, value)
+        }
+
+       if(DoctorNames.size() <1 || TANames.size() < 1 || RoomNames.size() < 1)
+       {
+           DoctorNames.clear();
+           TANames.clear();
+           RoomNames.clear();
+           WindowManager.ShowWarning(WarningPane);
+       }
+       else
+       {
+           Course NewCourse = new Course(CourseName, CourseDetails, DoctorNames, TANames, RoomNames);
+           DataManager.AllCourses.put(CourseName.toLowerCase(), NewCourse);
+           DataManager.AddCourseToFile(NewCourse, "Courses.txt");
+           Cancel();
+       }     
     }
 
+    
     @FXML
     void Cancel()
     {
-      Stage stage = (Stage) Cancel.getScene().getWindow();      
-      stage.close();  
+      WindowManager.CloseWindow(Cancel);
     }
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        for(Doctor CurrentDoctor :DataManager.AllDoctors.values() )
-      {
-        JFXCheckBox DoctorCheckBox = new JFXCheckBox(CurrentDoctor.getName());
-        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-        DoctorCheckBox.setCheckedColor(CheckedColor);
-        Doctors.getItems().add(DoctorCheckBox);   
-      }
-      
-      for(TeachingAssistant CurrentTA : DataManager.AllTeachingAssistants.values())
-      {
-        JFXCheckBox TACheckBox = new JFXCheckBox(CurrentTA.getName());
-        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-        TACheckBox.setCheckedColor(CheckedColor);
-        TAs.getItems().add(TACheckBox);   
-      }
-      
-      for(Room CurrentRoom : DataManager.AllRooms.values())
-      {
-        JFXCheckBox CheckBox = new JFXCheckBox(CurrentRoom.getName());
-        Paint CheckedColor = javafx.scene.paint.Color.web("#4527a0");
-        CheckBox.setCheckedColor(CheckedColor);
-        Rooms.getItems().add(CheckBox);   
-      }
-      WarningPane.setDisable(true);
+        WarningPane.setDisable(true);
+        WindowManager.IntializeListsData(Doctors, TAs, Rooms);
     }    
     
 }

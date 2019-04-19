@@ -2,6 +2,7 @@
 package emotionalSupport;
 
 import java.util.Objects;
+import java.util.Random;
 
 
 public class TimePeriod
@@ -9,15 +10,25 @@ public class TimePeriod
     // Time Must
     float StartTime;
     float EndTime;
-    String Day;
+    Day CurrentDay;
+    static Random RandomNumber = new Random();
     
-    public TimePeriod(float StartTime, float EndTime, String Day)
+    public TimePeriod(float StartTime, float EndTime, Day CurrentDay)
     {
         this.StartTime = StartTime;
         this.EndTime = EndTime;
-        this.Day = Day;
+        this.CurrentDay = CurrentDay;
     }
-
+    
+    public static TimePeriod RandomTimeFrame(int Duration)
+    {
+       int StartBound = Schedule.ClosingTime - Duration;
+       int Start = RandomNumber.nextInt((StartBound - Schedule.OpeningTime) + 1) + Schedule.OpeningTime;
+       int End = Start + Duration;
+       int RandomDay = RandomNumber.nextInt(5);
+       return new TimePeriod(Start, End, Day.GetDay(RandomDay));
+    }
+    
     @Override
     public boolean equals(Object obj)
     {
@@ -31,19 +42,11 @@ public class TimePeriod
             return false;
         }
         final TimePeriod other = (TimePeriod) obj;
-        if(!(this.Day.equals(other.Day)))
+        if(!(this.CurrentDay.equals(other.CurrentDay)))
         {
             return false;
         }
-        else if(this.StartTime < other.StartTime && this.EndTime > other.StartTime)
-        {
-            return true;
-        }
-        else if(this.StartTime < other.EndTime && this.EndTime > other.EndTime) 
-        {
-            return true;
-        }
-        else if(other.StartTime < this.StartTime && other.EndTime > this.EndTime)
+        else if(this.StartTime < other.EndTime && other.StartTime < this.EndTime)
         {
             return true;
         }
@@ -56,7 +59,7 @@ public class TimePeriod
         int hash = 5;
         hash = 67 * hash + Float.floatToIntBits(this.StartTime);
         hash = 67 * hash + Float.floatToIntBits(this.EndTime);
-        hash = 67 * hash + Objects.hashCode(this.Day);
+        hash = 67 * hash + Objects.hashCode(this.CurrentDay);
         return hash;
     }
 

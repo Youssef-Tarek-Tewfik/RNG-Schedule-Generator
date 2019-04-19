@@ -8,16 +8,16 @@
 
 <AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="939.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.EditDataController">
    <children>
-      <JFXButton fx:id="Save" buttonType="RAISED" layoutX="432.0" layoutY="573.0" onAction="#Close" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Save" textFill="WHITE" />
+      <JFXButton fx:id="Save" buttonType="RAISED" layoutX="432.0" layoutY="576.0" onAction="#Close" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Save" textFill="WHITE" />
       <JFXListView fx:id="Doctors" editable="true" layoutX="38.0" layoutY="144.0" prefHeight="296.0" prefWidth="214.0" showTooltip="true" style="-fx-selection-bar: #9575cd; -fx-control-inner-background: #e1bee7; -fx-background-color: #d1c4e9;" />
       <JFXListView fx:id="TeachingAssistants" editable="true" layoutX="363.0" layoutY="144.0" prefHeight="296.0" prefWidth="214.0" style="-fx-selection-bar: #9575cd; -fx-control-inner-background: #e1bee7; -fx-background-color: #d1c4e9;" />
       <JFXListView fx:id="Rooms" editable="true" layoutX="671.0" layoutY="144.0" prefHeight="296.0" prefWidth="214.0" showTooltip="true" style="-fx-selection-bar: #9575cd; -fx-background-color: #d1c4e9; -fx-control-inner-background: #e1bee7;" />
-      <JFXButton buttonType="RAISED" layoutX="88.0" layoutY="469.0" onAction="#AddInstructor" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0;" text="Add Doctor" textFill="WHITE" />
-      <JFXButton buttonType="RAISED" layoutX="431.0" layoutY="469.0" onAction="#AddTA" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0;" text="Add TA" textFill="WHITE" />
-      <JFXButton buttonType="RAISED" layoutX="739.0" layoutY="469.0" onAction="#AddRoom" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0;" text="Add Room" textFill="WHITE" />
-      <Label layoutX="287.0" layoutY="35.0" text="Add or select the data you want to delete" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="88.0" layoutY="469.0" onAction="#AddDoctor" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Add Doctor" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="432.0" layoutY="469.0" onAction="#AddTA" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Add TA" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="739.0" layoutY="469.0" onAction="#AddRoom" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Add Room" textFill="WHITE" />
+      <Label layoutX="241.0" layoutY="37.0" text="Add or select the data you want to delete" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="20.0" />
+            <Font size="25.0" />
          </font>
       </Label>
       <Label layoutX="114.0" layoutY="104.0" text="Doctors" textFill="WHITE">
@@ -31,7 +31,7 @@
          </font>
       </Label>
       <Label layoutX="749.0" layoutY="104.0" text="Rooms" textFill="WHITE">
-         <font>
+ h       <font>
             <Font size="17.0" />
          </font>
       </Label>
