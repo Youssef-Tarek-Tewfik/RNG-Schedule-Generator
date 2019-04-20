@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import java.util.ResourceBundle;
@@ -65,9 +66,9 @@ public class AddCoursesController implements Initializable {
            return;
        }
        int LecturesNumber ,LecturesHours,SectionsNumber,SectionHours;
-       ArrayList<String> DoctorNames = new ArrayList<String>();
-       ArrayList<String> TANames = new ArrayList<String>();
-       ArrayList<String> RoomNames = new ArrayList<String>();
+       HashMap<String ,Integer> DoctorNames = new HashMap<String ,Integer>();
+       HashMap<String ,Integer> TANames = new HashMap<String ,Integer>();
+       HashMap<String ,Integer> RoomNames = new HashMap<String ,Integer>();
        LessonDetails CourseDetails = null;
        try
        {
@@ -88,7 +89,7 @@ public class AddCoursesController implements Initializable {
         {
           if(CurrentTA.isSelected())
           {
-            TANames.add(CurrentTA.getText());
+            TANames.put(CurrentTA.getText(),0);
           }
         }
 
@@ -96,7 +97,7 @@ public class AddCoursesController implements Initializable {
         {
           if(CurrentDoctor.isSelected())
           {
-             DoctorNames.add((CurrentDoctor.getText()));
+             DoctorNames.put(CurrentDoctor.getText(),0);
           }
         }
 
@@ -104,7 +105,7 @@ public class AddCoursesController implements Initializable {
         {
           if(CurrentRoom.isSelected())
           {
-            RoomNames.add(CurrentRoom.getText());
+            RoomNames.put(CurrentRoom.getText(),0);
           }
         }
 

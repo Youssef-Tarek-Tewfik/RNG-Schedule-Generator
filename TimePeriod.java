@@ -46,7 +46,7 @@ public class TimePeriod
         {
             return false;
         }
-        else if(this.StartTime < other.EndTime && other.StartTime < this.EndTime)
+        else if(this.StartTime <= other.EndTime && other.StartTime <= this.EndTime)
         {
             return true;
         }

@@ -256,9 +256,9 @@ public final class DataManager
                {
                    String Name = Information[0];
                    LessonDetails Details;                 
-                   ArrayList<String> Doctors = new ArrayList<String>();
-                   ArrayList<String> TAs = new ArrayList<String>();
-                   ArrayList<String> Rooms = new ArrayList<String>();
+                   HashMap<String ,Integer> Doctors = new HashMap<String ,Integer>();
+                   HashMap<String ,Integer> TAs = new HashMap<String ,Integer>();
+                   HashMap<String ,Integer> Rooms = new HashMap<String ,Integer>();
                    String []DetailInfo = Information[1].split("-");
                    String []DoctorNames = Information[2].split("!");
                    String []TANames = Information[3].split("@");
@@ -266,15 +266,15 @@ public final class DataManager
                    Details = new LessonDetails(Integer.parseInt(DetailInfo[0]),Integer.parseInt(DetailInfo[1]), Float.parseFloat(DetailInfo[2]), Float.parseFloat(DetailInfo[3]));
                    for(String CurrentDoctor : DoctorNames)
                    {
-                       Doctors.add(CurrentDoctor);
+                       Doctors.put(CurrentDoctor,0);
                    }
                    for(String CurrentTA : TANames)
                    {
-                       TAs.add(CurrentTA);
+                       TAs.put(CurrentTA,0);
                    }
                    for(String CurrentRoom : RoomNames)
                    {
-                        Rooms.add(CurrentRoom);
+                        Rooms.put(CurrentRoom,0);
                    }
                    Course CurrentCourse = new Course(Name, Details, Doctors, TAs, Rooms);
                    AllCourses.put(Name, CurrentCourse);

@@ -26,7 +26,7 @@ import com.jfoenix.controls.JFXListView;
  *
  * @author Ahmed Hatem
  */
-public class WindowManager
+public abstract class WindowManager
 {
     public static void ShowWarning(StackPane WarningPane)
     {

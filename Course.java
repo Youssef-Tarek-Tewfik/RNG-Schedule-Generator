@@ -1,6 +1,8 @@
 package emotionalSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Course
@@ -8,9 +10,9 @@ public class Course
     private final int id;
     public final String name;
     static int Count = DataManager.AllCourses.size();
-    public ArrayList<String> Doctors;
-    public ArrayList<String> TAs;
-    public ArrayList<String> Rooms;
+    public HashMap<String ,Integer> Doctors;
+    public HashMap<String ,Integer> TAs;
+    public HashMap<String ,Integer> Rooms;
     public LessonDetails Details;
     
     
@@ -21,7 +23,7 @@ public class Course
         id = ++Count;  
     }
     
-    public Course(String name, LessonDetails lessonDetails, ArrayList<String> doctors, ArrayList<String> TAs, ArrayList<String> rooms)
+    public Course(String name, LessonDetails lessonDetails, HashMap<String ,Integer> doctors, HashMap<String ,Integer> TAs, HashMap<String ,Integer> rooms)
     {
         id = ++Count;
         this.name = name;
@@ -36,41 +38,89 @@ public class Course
         return name;
     }
     
-    public String GetRandomDoctor()
+    public String GetFreestDoctor()
     {
-        //RandomNumber.nextInt((StartBound - Schedule.OpeningTime) + 1) + Schedule.OpeningTime;
-        return (Doctors.get(new Random().nextInt(Doctors.size())));
+        String Name = "";
+        int Min = 9999;
+        for(Map.Entry<String,Integer> CurrentDoctor : Doctors.entrySet())
+        {
+            if(CurrentDoctor.getValue() < Min)
+            {
+                Min = CurrentDoctor.getValue();
+                Name = CurrentDoctor.getKey();
+            }
+        }
+        Doctors.put(Name,Doctors.get(Name)+1);
+        return Name;
     }
     
-    public String GetRandomTA()
+    public String GetFreestTA()
     {
-       return (TAs.get(new Random().nextInt(Doctors.size())));
+        String Name = "";
+        int Min = 9999;
+        for(Map.Entry<String,Integer> CurrentTA : TAs.entrySet())
+        {
+            if(CurrentTA.getValue() < Min)
+            {
+                Min = CurrentTA.getValue();
+                Name = CurrentTA.getKey();
+            }
+        }
+        TAs.put(Name, TAs.get(Name)+1);
+        return Name;
     }
     
-    public String GetRandomRoom()
+    public String GetFreestRoom()
     {
-        return (Rooms.get(new Random().nextInt(Doctors.size())));
+        String Name = "";
+        int Min = 9999;
+        for(Map.Entry<String,Integer> CurrentRoom : Rooms.entrySet())
+        {
+            if(CurrentRoom.getValue() < Min)
+            {
+                Min = CurrentRoom.getValue();
+                Name = CurrentRoom.getKey();
+            }
+        }
+        //Rooms.put(Name, Rooms.get(Name)+1);
+        return Name;
     }
     
+
+    public void Reset()
+    {
+        for(Integer DoctorLessons : Doctors.values())
+        {
+            DoctorLessons= 0;
+        }
+        for(Integer TALessons : TAs.values())
+        {
+            TALessons = 0;
+        }
+        for(Integer RoomLessons : Rooms.values())
+        {
+            RoomLessons= 0;
+        }
+    }
     
     @Override
     public String toString()
     {
         String Result = name + "/" + Details.toString() + "/";
         
-        for(String CurrentDoctor : Doctors)
+        for(String CurrentDoctor : Doctors.keySet())
         {
             Result += CurrentDoctor + "!";
         }
         Result = Result.substring(0, Result.length()-1);
         Result += "/";
-        for(String CurrentTA : TAs)
+        for(String CurrentTA : TAs.keySet())
         {
             Result += CurrentTA + "@";
         }
         Result = Result.substring(0, Result.length()-1);
         Result += "/";
-        for(String CurrentRoom : Rooms)
+        for(String CurrentRoom : Rooms.keySet())
         {
             Result += CurrentRoom + "#";
         }

@@ -5,6 +5,7 @@
  */
 package emotionalSupport;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 
@@ -18,32 +19,39 @@ public class TableGenerator
     public static Schedule GenerateTable()
     {
         Schedule NewSchedule = new Schedule();
+        ArrayList<Course> ShuffledCourses = new ArrayList<Course>(DataManager.AllCourses.values());
+        Collections.shuffle(ShuffledCourses);
         TotalLessons = 0;
-        for(Course CurrentCourse : DataManager.AllCourses.values())
+        for(Course CurrentCourse : ShuffledCourses)
         {
             int LecturesNumber = CurrentCourse.Details.no_of_lecs;
             int SectionsNumeber = CurrentCourse.Details.no_of_sections;
             int LectureHours = (int)CurrentCourse.Details.lec_hrs;
-            int SectionHours = (int)CurrentCourse.Details.sec_hrs;
-            TotalLessons += LecturesNumber + SectionsNumeber;
-            
-            for(int j= 0; j <LecturesNumber ; j++)
+            CurrentCourse.Reset();
+            TotalLessons += LecturesNumber + SectionsNumeber;           
+            for(int j= 0; j < LecturesNumber ; j++)
             {
-                TimePeriod LectureTime = NewSchedule.OptimalTime(LectureHours) ;
-                String Doctor = CurrentCourse.GetRandomDoctor();
-                String Room = CurrentCourse.GetRandomRoom();
-                Lesson NewLesson = new Lesson(Doctor, Room, LectureTime, Lesson.LessonType.Lecture, CurrentCourse.name + "Lecture " + (j+1));
+                String Doctor = CurrentCourse.GetFreestDoctor();
+                String Room = CurrentCourse.GetFreestRoom();
+                TimePeriod LectureTime = NewSchedule.OptimalTime(LectureHours,Room) ;               
+                Lesson NewLesson = new Lesson(Doctor, Room, LectureTime, Lesson.LessonType.Lecture, CurrentCourse.name + " Lecture ");
                 NewSchedule.AddLesson(LectureTime.CurrentDay.ordinal(), NewLesson);
-            }
-            for(int j= 0; j <SectionsNumeber ; j++)
+            }          
+          
+        }
+        
+        for(Course CurrentCourse : ShuffledCourses)
+        {
+            int SectionsNumeber = CurrentCourse.Details.no_of_sections;
+            int SectionHours = (int)CurrentCourse.Details.sec_hrs;
+            for(int j= 0; j < SectionsNumeber ; j++)
             {
-                TimePeriod SectionTime = NewSchedule.OptimalTime(SectionHours);
-                String TA = CurrentCourse.GetRandomTA();
-                String Room = CurrentCourse.GetRandomRoom();
-                Lesson NewLesson = new Lesson(TA, Room, SectionTime, Lesson.LessonType.Section, CurrentCourse.name + "Section " + (j+1));
+                String TA = CurrentCourse.GetFreestTA();
+                String Room = CurrentCourse.GetFreestRoom();
+                TimePeriod SectionTime = NewSchedule.OptimalTime(SectionHours,Room);
+                Lesson NewLesson = new Lesson(TA, Room, SectionTime, Lesson.LessonType.Section, CurrentCourse.name + " Section " + (j+1));
                 NewSchedule.AddLesson(SectionTime.CurrentDay.ordinal(), NewLesson);
             }
-
         }
         
         
@@ -51,6 +59,7 @@ public class TableGenerator
         {
             GenerateTable();
         }
+        
               
         return NewSchedule; 
     }   

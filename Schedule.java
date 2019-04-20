@@ -1,15 +1,27 @@
 package emotionalSupport;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Comparator; 
+import java.util.HashMap;
+import java.util.TreeSet;
+
+class SortByTime implements Comparator<Lesson>
+{
+    @Override
+    public int compare(Lesson L1 ,Lesson L2)
+    {
+        return (int)(L1.TimeFrame.StartTime - L2.TimeFrame.StartTime);
+    }
+}
 
 public class Schedule
 {
     public int Fitness;
     public final float DayStart,DayEnd;
     public static int OpeningTime,ClosingTime;
+ 
+    ArrayList<TreeSet<Lesson>> WeekDays;
     
-    ArrayList<HashSet<Lesson>> WeekDays;
     
     public Schedule()
     {
@@ -19,7 +31,7 @@ public class Schedule
         WeekDays = new ArrayList<>(5);
         for(int i = 0; i<5; i++)
         {
-            WeekDays.add(new HashSet<>());
+            WeekDays.add(new TreeSet<>(new SortByTime()));
         }
     }
     
@@ -41,7 +53,7 @@ public class Schedule
     {
         int Index = 0;
         int Min = 9999;
-        for(int i=0;i<5;i++)
+        for(int i=0; i < 5 ;i++)
         {
            if(WeekDays.get(i).size() < Min)
            {
@@ -53,7 +65,7 @@ public class Schedule
         return Index;
     }
     
-    public TimePeriod OptimalTime(int Duration)
+    public TimePeriod OptimalTime(int Duration, String MyRoom)
     {
         int OptimalDay = FreestDay();
         TimePeriod Result = new TimePeriod(OpeningTime,OpeningTime + Duration ,Day.GetDay(OptimalDay));
@@ -65,8 +77,17 @@ public class Schedule
                 Result.StartTime = CurrentLesson.TimeFrame.EndTime;
                 Result.EndTime = Result.StartTime + Duration; 
             }
+            else if(Result.EndTime <= ClosingTime)
+            {
+                return Result;
+            }
+            else
+            {
+                Result.StartTime = OpeningTime;
+                Result.EndTime = OpeningTime + Duration;
+            }
         }
-    
+        
         return Result;
     }
     
