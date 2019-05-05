@@ -27,14 +27,13 @@ public class TableGenerator
             int LecturesNumber = CurrentCourse.Details.no_of_lecs;
             int SectionsNumeber = CurrentCourse.Details.no_of_sections;
             int LectureHours = (int)CurrentCourse.Details.lec_hrs;
-            CurrentCourse.Reset();
             TotalLessons += LecturesNumber + SectionsNumeber;           
             for(int j= 0; j < LecturesNumber ; j++)
             {
-                String Doctor = CurrentCourse.GetFreestDoctor();
-                String Room = CurrentCourse.GetFreestRoom();
-                TimePeriod LectureTime = NewSchedule.OptimalTime(LectureHours,Room) ;               
-                Lesson NewLesson = new Lesson(Doctor, Room, LectureTime, Lesson.LessonType.Lecture, CurrentCourse.name + " Lecture ");
+                String Doctor = CurrentCourse.GetRandomDoctor();
+                String Room = CurrentCourse.GetRandomRoom();
+                Lesson NewLesson = new Lesson(Doctor, Room, new TimePeriod(LectureHours), Lesson.LessonType.Lecture, CurrentCourse.name);
+                TimePeriod LectureTime = NewSchedule.SetOptimalTime(NewLesson);               
                 NewSchedule.AddLesson(LectureTime.CurrentDay.ordinal(), NewLesson);
             }          
           
@@ -46,21 +45,18 @@ public class TableGenerator
             int SectionHours = (int)CurrentCourse.Details.sec_hrs;
             for(int j= 0; j < SectionsNumeber ; j++)
             {
-                String TA = CurrentCourse.GetFreestTA();
-                String Room = CurrentCourse.GetFreestRoom();
-                TimePeriod SectionTime = NewSchedule.OptimalTime(SectionHours,Room);
-                Lesson NewLesson = new Lesson(TA, Room, SectionTime, Lesson.LessonType.Section, CurrentCourse.name + " Section " + (j+1));
+                String TA = CurrentCourse.GetRandomTA();
+                String Room = CurrentCourse.GetRandomRoom();
+                Lesson NewLesson = new Lesson(TA, Room, new TimePeriod(SectionHours), Lesson.LessonType.Section, CurrentCourse.name);
+                TimePeriod SectionTime =  NewSchedule.SetOptimalTime(NewLesson);               
                 NewSchedule.AddLesson(SectionTime.CurrentDay.ordinal(), NewLesson);
             }
         }
-        
-        
-        if(NewSchedule.Fitness != TotalLessons)
+       
+        if(TotalLessons != NewSchedule.Fitness)
         {
-            GenerateTable();
+            System.err.println("Failed");
         }
-        
-              
         return NewSchedule; 
     }   
 }

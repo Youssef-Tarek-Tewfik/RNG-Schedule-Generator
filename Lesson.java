@@ -86,7 +86,7 @@ public class Lesson
         {
             TimeFrame.EndTime -=12;
         }
-        return("Name : " + CourseName +"\nStartTime : " + TimeFrame.StartTime + "\nEndTime : "
+        return("Day : " + TimeFrame.CurrentDay +"\nName : " + CourseName +"\nStartTime : " + TimeFrame.StartTime + "\nEndTime : "
                 + TimeFrame.EndTime + "\nType : " + lessonType + "\nInstructor : " + instructor + "\nRoom : " + room);
     }
     

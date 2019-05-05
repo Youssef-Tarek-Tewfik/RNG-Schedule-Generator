@@ -1,8 +1,9 @@
 package emotionalSupport;
 
+import emotionalSupport.Lesson.LessonType;
 import java.util.ArrayList;
 import java.util.Comparator; 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 class SortByTime implements Comparator<Lesson>
@@ -19,19 +20,22 @@ public class Schedule
     public int Fitness;
     public final float DayStart,DayEnd;
     public static int OpeningTime,ClosingTime;
- 
-    ArrayList<TreeSet<Lesson>> WeekDays;
+    int FreestDay;
+    ArrayList<HashSet<Lesson>> WeekDays;
+    ArrayList<TreeSet<Lesson>> SortedWeekDays;
     
     
     public Schedule()
     {
         Fitness = 0;
+        FreestDay = 0;
         DayStart = 8.0f;
         DayEnd = 20.0f;
         WeekDays = new ArrayList<>(5);
         for(int i = 0; i<5; i++)
         {
-            WeekDays.add(new TreeSet<>(new SortByTime()));
+            WeekDays.add(new HashSet<>());
+            //SortedWeekDays.add(new TreeSet<>(new SortByTime()));
         }
     }
     
@@ -46,55 +50,78 @@ public class Schedule
         if(WeekDays.get(Day).add(NewLesson))
         {
             Fitness++;
+            System.out.println("Added " + NewLesson.toString()+ "\n\n");
+        }
+        else
+        {
+            WeekDays.get(Day).contains(NewLesson);
+            System.out.println("Failed to Add " + NewLesson.toString() + "\n\n");
         }
     }
     
     public int FreestDay()
-    {
-        int Index = 0;
-        int Min = 9999;
-        for(int i=0; i < 5 ;i++)
-        {
-           if(WeekDays.get(i).size() < Min)
-           {
-               Min = WeekDays.get(i).size();
-               Index = i;
-           }
-        }
-        
-        return Index;
+    {       
+        return (FreestDay++) % 5;
     }
     
-    public TimePeriod OptimalTime(int Duration, String MyRoom)
+    public TimePeriod SetOptimalTime(Lesson NewLesson)
     {
         int OptimalDay = FreestDay();
-        TimePeriod Result = new TimePeriod(OpeningTime,OpeningTime + Duration ,Day.GetDay(OptimalDay));
+        int NumberOfTries = 10;
+        float MaxEndTime = 8;
+        NewLesson.TimeFrame = new TimePeriod(OpeningTime,OpeningTime + NewLesson.TimeFrame.Duration ,Day.GetDay(OptimalDay));
         
         for(Lesson CurrentLesson : WeekDays.get(OptimalDay))
         {
-            if(CurrentLesson.TimeFrame.equals(Result))
+            boolean OneIsALecture = CurrentLesson.lessonType.equals(LessonType.Lecture) || NewLesson.lessonType.equals(LessonType.Lecture);
+            boolean RoomOverLaped = CurrentLesson.room.equals(NewLesson.room);
+            boolean TAOverLap = CurrentLesson.instructor.equals(NewLesson.instructor);
+            boolean TimeOverLap = CurrentLesson.TimeFrame.equals(NewLesson.TimeFrame);
+            if(CurrentLesson.TimeFrame.EndTime > MaxEndTime)
             {
-                Result.StartTime = CurrentLesson.TimeFrame.EndTime;
-                Result.EndTime = Result.StartTime + Duration; 
+                MaxEndTime = CurrentLesson.TimeFrame.EndTime;
             }
-            else if(Result.EndTime <= ClosingTime)
+            if(CurrentLesson.equals(NewLesson) || OneIsALecture)
             {
-                return Result;
-            }
-            else
-            {
-                Result.StartTime = OpeningTime;
-                Result.EndTime = OpeningTime + Duration;
+                if(RoomOverLaped && TimeOverLap && !OneIsALecture)
+                {
+                    for(int i = 0; i < NumberOfTries; i++)
+                    {
+                        NewLesson.room = DataManager.AllCourses.get(NewLesson.CourseName).GetRandomRoom();
+                        if(!CurrentLesson.equals(NewLesson))
+                        {
+                            return NewLesson.TimeFrame;
+                        }
+                    }
+                }
+                else if(TAOverLap && TimeOverLap && !OneIsALecture)
+                {
+                    for(int i = 0; i < NumberOfTries; i++)
+                    {
+                        NewLesson.instructor = DataManager.AllCourses.get(NewLesson.CourseName).GetRandomTA();
+                        if(!CurrentLesson.equals(NewLesson))
+                        {
+                            return NewLesson.TimeFrame;
+                        }
+                    }
+                }
+                NewLesson.TimeFrame.StartTime = CurrentLesson.TimeFrame.EndTime;
+                NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame .StartTime + NewLesson.TimeFrame.Duration;              
             }
         }
-        
-        return Result;
+        while(WeekDays.get(OptimalDay).contains(NewLesson))
+        {
+            NewLesson.TimeFrame.StartTime = MaxEndTime;
+            NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;
+            MaxEndTime = NewLesson.TimeFrame.EndTime;
+        }
+        return NewLesson.TimeFrame;
     }
     
     public void PrintSchedule()
     {
-        Day CurrentDay = Day.SUNDAY;
-        for(int i = 0; i<5;i++)
+
+        for(int i = 0; i <WeekDays.size(); i++)
         {
             System.out.println("***********" + Day.GetDay(i) + "***********");
             

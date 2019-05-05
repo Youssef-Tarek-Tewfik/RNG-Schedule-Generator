@@ -66,9 +66,9 @@ public class AddCoursesController implements Initializable {
            return;
        }
        int LecturesNumber ,LecturesHours,SectionsNumber,SectionHours;
-       HashMap<String ,Integer> DoctorNames = new HashMap<String ,Integer>();
-       HashMap<String ,Integer> TANames = new HashMap<String ,Integer>();
-       HashMap<String ,Integer> RoomNames = new HashMap<String ,Integer>();
+       ArrayList<String> DoctorNames = new  ArrayList<String>();
+       ArrayList<String> TANames = new  ArrayList<String>();
+       ArrayList<String> RoomNames = new ArrayList<String>();
        LessonDetails CourseDetails = null;
        try
        {
@@ -89,7 +89,7 @@ public class AddCoursesController implements Initializable {
         {
           if(CurrentTA.isSelected())
           {
-            TANames.put(CurrentTA.getText(),0);
+            TANames.add(CurrentTA.getText());
           }
         }
 
@@ -97,7 +97,7 @@ public class AddCoursesController implements Initializable {
         {
           if(CurrentDoctor.isSelected())
           {
-             DoctorNames.put(CurrentDoctor.getText(),0);
+             DoctorNames.add(CurrentDoctor.getText());
           }
         }
 
@@ -105,7 +105,7 @@ public class AddCoursesController implements Initializable {
         {
           if(CurrentRoom.isSelected())
           {
-            RoomNames.put(CurrentRoom.getText(),0);
+            RoomNames.add(CurrentRoom.getText());
           }
         }
 

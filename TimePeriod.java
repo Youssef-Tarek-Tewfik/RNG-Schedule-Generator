@@ -10,6 +10,7 @@ public class TimePeriod
     // Time Must
     float StartTime;
     float EndTime;
+    float Duration;
     Day CurrentDay;
     static Random RandomNumber = new Random();
     
@@ -18,6 +19,14 @@ public class TimePeriod
         this.StartTime = StartTime;
         this.EndTime = EndTime;
         this.CurrentDay = CurrentDay;
+        Duration = EndTime - StartTime;
+    }
+    
+    public TimePeriod(float Duration)
+    {
+        StartTime = Schedule.OpeningTime;
+        EndTime = StartTime + Duration;
+        this.Duration = Duration;
     }
     
     public static TimePeriod RandomTimeFrame(int Duration)
@@ -46,7 +55,7 @@ public class TimePeriod
         {
             return false;
         }
-        else if(this.StartTime <= other.EndTime && other.StartTime <= this.EndTime)
+        else if(this.StartTime < other.EndTime && other.StartTime < this.EndTime)
         {
             return true;
         }
