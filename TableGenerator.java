@@ -18,8 +18,10 @@ public class TableGenerator
 {
     static int TotalLessons;
     static Random RandomNumber;
+    static boolean Failed;
     public static Schedule GenerateTable()
     {
+        Failed = false;
         RandomNumber = new Random();
         Schedule NewSchedule = new Schedule();
         ArrayList<Course> ShuffledCourses = new ArrayList<Course>(DataManager.AllCourses.values());
@@ -72,7 +74,7 @@ public class TableGenerator
        
         if(TotalLessons != NewSchedule.Fitness)
         {
-            System.err.println("Failed");
+            Failed = true;
         }
         return NewSchedule; 
     }   

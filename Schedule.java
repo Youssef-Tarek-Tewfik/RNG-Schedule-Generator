@@ -45,15 +45,10 @@ public class Schedule
     
     public void AddLesson(int Day,Lesson NewLesson)
     {
-        if(WeekDays.get(Day).add(NewLesson))
+        if(NewLesson.TimeFrame.EndTime <= ClosingTime && WeekDays.get(Day).add(NewLesson))
         {
             Fitness++;
             SortDay(Day);
-            //System.out.println("Added " + NewLesson.toString()+ "\n\n");
-        }
-        else
-        {
-            //System.out.println("Failed to Add " + NewLesson.toString() + "\n\n");
         }
     }
     
