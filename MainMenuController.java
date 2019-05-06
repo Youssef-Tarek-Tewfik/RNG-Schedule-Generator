@@ -35,8 +35,9 @@ public class MainMenuController implements Initializable {
     void GenerateTable()
     {
        Schedule.SetWorkingHours(8, 20);
-       Schedule GeneratedSchedule = TableGenerator.GenerateTable();
+       Schedule GeneratedSchedule = TableGenerator.GenerateTable();      
        GeneratedSchedule.PrintSchedule();
+
     }
     
     @FXML

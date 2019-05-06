@@ -2,6 +2,7 @@ package emotionalSupport;
 
 import emotionalSupport.Lesson.LessonType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator; 
 import java.util.HashSet;
 import java.util.TreeSet;
@@ -11,7 +12,7 @@ class SortByTime implements Comparator<Lesson>
     @Override
     public int compare(Lesson L1 ,Lesson L2)
     {
-        return (int)(L1.TimeFrame.StartTime - L2.TimeFrame.StartTime);
+        return (L1.TimeFrame.StartTime - L2.TimeFrame.StartTime);
     }
 }
 
@@ -21,10 +22,8 @@ public class Schedule
     public final float DayStart,DayEnd;
     public static int OpeningTime,ClosingTime;
     int FreestDay;
-    ArrayList<HashSet<Lesson>> WeekDays;
-    ArrayList<TreeSet<Lesson>> SortedWeekDays;
-    
-    
+    ArrayList<ArrayList<Lesson>> WeekDays;
+      
     public Schedule()
     {
         Fitness = 0;
@@ -34,8 +33,7 @@ public class Schedule
         WeekDays = new ArrayList<>(5);
         for(int i = 0; i<5; i++)
         {
-            WeekDays.add(new HashSet<>());
-            //SortedWeekDays.add(new TreeSet<>(new SortByTime()));
+            WeekDays.add(new ArrayList<>());
         }
     }
     
@@ -50,12 +48,12 @@ public class Schedule
         if(WeekDays.get(Day).add(NewLesson))
         {
             Fitness++;
-            System.out.println("Added " + NewLesson.toString()+ "\n\n");
+            SortDay(Day);
+            //System.out.println("Added " + NewLesson.toString()+ "\n\n");
         }
         else
         {
-            WeekDays.get(Day).contains(NewLesson);
-            System.out.println("Failed to Add " + NewLesson.toString() + "\n\n");
+            //System.out.println("Failed to Add " + NewLesson.toString() + "\n\n");
         }
     }
     
@@ -68,8 +66,8 @@ public class Schedule
     {
         int OptimalDay = FreestDay();
         int NumberOfTries = 10;
-        float MaxEndTime = 8;
-        NewLesson.TimeFrame = new TimePeriod(OpeningTime,OpeningTime + NewLesson.TimeFrame.Duration ,Day.GetDay(OptimalDay));
+        int MaxEndTime = 8;
+        NewLesson.TimeFrame.CurrentDay = Day.GetDay(OptimalDay);
         
         for(Lesson CurrentLesson : WeekDays.get(OptimalDay))
         {
@@ -77,13 +75,14 @@ public class Schedule
             boolean RoomOverLaped = CurrentLesson.room.equals(NewLesson.room);
             boolean TAOverLap = CurrentLesson.instructor.equals(NewLesson.instructor);
             boolean TimeOverLap = CurrentLesson.TimeFrame.equals(NewLesson.TimeFrame);
+            boolean SameGroup = CurrentLesson.Group == NewLesson.Group && !OneIsALecture;
             if(CurrentLesson.TimeFrame.EndTime > MaxEndTime)
             {
                 MaxEndTime = CurrentLesson.TimeFrame.EndTime;
             }
-            if(CurrentLesson.equals(NewLesson) || OneIsALecture)
+            if(CurrentLesson.equals(NewLesson))
             {
-                if(RoomOverLaped && TimeOverLap && !OneIsALecture)
+                if(RoomOverLaped && TimeOverLap && !OneIsALecture && !SameGroup)
                 {
                     for(int i = 0; i < NumberOfTries; i++)
                     {
@@ -94,7 +93,7 @@ public class Schedule
                         }
                     }
                 }
-                else if(TAOverLap && TimeOverLap && !OneIsALecture)
+                else if(TAOverLap && TimeOverLap && !OneIsALecture && !SameGroup)
                 {
                     for(int i = 0; i < NumberOfTries; i++)
                     {
@@ -106,7 +105,7 @@ public class Schedule
                     }
                 }
                 NewLesson.TimeFrame.StartTime = CurrentLesson.TimeFrame.EndTime;
-                NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame .StartTime + NewLesson.TimeFrame.Duration;              
+                NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;              
             }
         }
         while(WeekDays.get(OptimalDay).contains(NewLesson))
@@ -118,13 +117,17 @@ public class Schedule
         return NewLesson.TimeFrame;
     }
     
+    
+    public void SortDay(int DayIndex)
+    {
+        Collections.sort(WeekDays.get(DayIndex),new SortByTime());
+    }
+    
     public void PrintSchedule()
     {
-
-        for(int i = 0; i <WeekDays.size(); i++)
+        for(int i = 0; i < WeekDays.size(); i++)
         {
             System.out.println("***********" + Day.GetDay(i) + "***********");
-            
             if(WeekDays.get(i).size() > 0)
             {
                 for(Lesson CurrentLesson : WeekDays.get(i))

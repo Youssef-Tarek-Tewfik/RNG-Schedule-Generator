@@ -8,13 +8,13 @@ import java.util.Random;
 public class TimePeriod
 {
     // Time Must
-    float StartTime;
-    float EndTime;
-    float Duration;
+    int StartTime;
+    int EndTime;
+    int Duration;
     Day CurrentDay;
     static Random RandomNumber = new Random();
     
-    public TimePeriod(float StartTime, float EndTime, Day CurrentDay)
+    public TimePeriod(int StartTime, int EndTime, Day CurrentDay)
     {
         this.StartTime = StartTime;
         this.EndTime = EndTime;
@@ -22,20 +22,11 @@ public class TimePeriod
         Duration = EndTime - StartTime;
     }
     
-    public TimePeriod(float Duration)
+    public TimePeriod(int Duration)
     {
         StartTime = Schedule.OpeningTime;
         EndTime = StartTime + Duration;
         this.Duration = Duration;
-    }
-    
-    public static TimePeriod RandomTimeFrame(int Duration)
-    {
-       int StartBound = Schedule.ClosingTime - Duration;
-       int Start = RandomNumber.nextInt((StartBound - Schedule.OpeningTime) + 1) + Schedule.OpeningTime;
-       int End = Start + Duration;
-       int RandomDay = RandomNumber.nextInt(5);
-       return new TimePeriod(Start, End, Day.GetDay(RandomDay));
     }
     
     @Override
