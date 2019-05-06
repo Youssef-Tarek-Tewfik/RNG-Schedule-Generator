@@ -35,7 +35,7 @@ public class Lesson
         }
         final Lesson other = (Lesson) obj;
         
-        if((this.lessonType == LessonType.Lecture || other.lessonType == LessonType.Lecture) && this.TimeFrame.equals(other.TimeFrame))
+        if((this.lessonType == LessonType.Lecture || other.lessonType == LessonType.Lecture  && this.Group == other.Group) && this.TimeFrame.equals(other.TimeFrame))
         {
             return true;
         }
@@ -92,8 +92,8 @@ public class Lesson
         {
             TimeFrame.EndTime -=12;
         }
-        return("Day : " + TimeFrame.CurrentDay + "\nName : " + CourseName +"\nStartTime : " + TimeFrame.StartTime + "\nEndTime : "
-                + TimeFrame.EndTime + "\nType : " + lessonType + " " + Group + "\nInstructor : " + instructor + "\nRoom : " + room);
+        return("\nName : " + CourseName +"\nStartTime : " + TimeFrame.StartTime + "\nEndTime : "
+                + TimeFrame.EndTime + "\nType : " + lessonType + " " + Group + "\n   Instructor : " + instructor + "\n Room : " + room);
     }
     
     public static int getCount()

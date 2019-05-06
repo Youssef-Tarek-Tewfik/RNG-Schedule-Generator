@@ -1,8 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="787.0" prefWidth="1137.0" style="-fx-background-color: #212121;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="emotionalSupport.TableViewController">
-    
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="953.0" prefWidth="1495.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.TableViewController">
+   <children>
+      <Text fill="#cdcdcd" layoutX="27.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sunday">
+         <font>
+            <Font name="Calibri Italic" size="29.0" />
+         </font>
+      </Text>
+      <Text fill="#cdcdcd" layoutX="28.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monday">
+         <font>
+            <Font name="Calibri Italic" size="29.0" />
+         </font>
+      </Text>
+      <Text fill="#cdcdcd" layoutX="27.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tuesday">
+         <font>
+            <Font name="Calibri Italic" size="29.0" />
+         </font>
+      </Text>
+      <Text fill="#cdcdcd" layoutX="28.0" layoutY="668.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wednesday">
+         <font>
+            <Font name="Calibri Italic" size="29.0" />
+         </font>
+      </Text>
+      <Text fill="#cdcdcd" layoutX="25.0" layoutY="825.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thursday">
+         <font>
+            <Font name="Calibri Italic" size="29.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#43289e" height="64.0" layoutX="-2.0" layoutY="14.0" stroke="#3c3c3c" strokeType="INSIDE" strokeWidth="7.0" width="1495.0" />
+      <Text fx:id="title" fill="#fcffe6" layoutX="-203.0" layoutY="-45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Table" textAlignment="CENTER" wrappingWidth="1054.13671875" x="300.0" y="100.0">
+         <font>
+            <Font name="Calibri Bold Italic" size="36.0" />
+         </font>
+      </Text>
+      <JFXMasonryPane fx:id="Sunday" layoutX="196.0" layoutY="117.0" prefHeight="120.0" prefWidth="1308.0" />
+      <JFXMasonryPane fx:id="Monday" layoutX="196.0" layoutY="280.0" prefHeight="120.0" prefWidth="1308.0" />
+      <JFXMasonryPane fx:id="Tuesday" layoutX="196.0" layoutY="442.0" prefHeight="120.0" prefWidth="1308.0" />
+      <JFXMasonryPane fx:id="Wednesday" layoutX="196.0" layoutY="601.0" prefHeight="120.0" prefWidth="1308.0" />
+      <JFXMasonryPane fx:id="Thursday" layoutX="197.0" layoutY="758.0" prefHeight="120.0" prefWidth="1308.0" />
+      <StackPane fx:id="WarningPane" layoutX="355.0" layoutY="233.0" prefHeight="419.0" prefWidth="786.0" />
+   </children>
 </AnchorPane>

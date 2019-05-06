@@ -45,9 +45,10 @@ public class Schedule
     
     public void AddLesson(int Day,Lesson NewLesson)
     {
-        if(NewLesson.TimeFrame.EndTime <= ClosingTime && WeekDays.get(Day).add(NewLesson))
+        if(NewLesson.TimeFrame.EndTime <= ClosingTime)
         {
             Fitness++;
+            WeekDays.get(Day).add(NewLesson);
             SortDay(Day);
         }
     }
@@ -66,7 +67,7 @@ public class Schedule
         
         for(Lesson CurrentLesson : WeekDays.get(OptimalDay))
         {
-            boolean OneIsALecture = CurrentLesson.lessonType.equals(LessonType.Lecture) || NewLesson.lessonType.equals(LessonType.Lecture);
+            boolean OneIsALecture = (CurrentLesson.lessonType.equals(LessonType.Lecture) || NewLesson.lessonType.equals(LessonType.Lecture)) && NewLesson.Group == CurrentLesson.Group;
             boolean RoomOverLaped = CurrentLesson.room.equals(NewLesson.room);
             boolean TAOverLap = CurrentLesson.instructor.equals(NewLesson.instructor);
             boolean TimeOverLap = CurrentLesson.TimeFrame.equals(NewLesson.TimeFrame);
