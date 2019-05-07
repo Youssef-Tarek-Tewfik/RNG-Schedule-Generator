@@ -97,17 +97,8 @@ public class Schedule
                     }
                 }
                 
-                if(NewLesson.Priority > CurrentLesson.Priority && !OneIsALecture)
-                {
-                    CurrentLesson.TimeFrame.StartTime = NewLesson.TimeFrame.EndTime;
-                    CurrentLesson.TimeFrame.EndTime = CurrentLesson.TimeFrame.StartTime + CurrentLesson.TimeFrame.Duration;
-                    NewLesson = new Lesson(CurrentLesson);
-                }
-                else
-                {
-                    NewLesson.TimeFrame.StartTime = CurrentLesson.TimeFrame.EndTime;
-                    NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;    
-                }         
+                NewLesson.TimeFrame.StartTime = CurrentLesson.TimeFrame.EndTime;
+                NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;            
             }
         }
         return NewLesson.TimeFrame;
