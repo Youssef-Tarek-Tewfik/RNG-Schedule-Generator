@@ -61,8 +61,7 @@ public class Schedule
     public TimePeriod SetOptimalTime(Lesson NewLesson)
     {
         int OptimalDay = FreestDay();
-        int NumberOfTries = 10;
-        int MaxEndTime = 8;
+        int NumberOfTries = 50;
         NewLesson.TimeFrame.CurrentDay = Day.GetDay(OptimalDay);
         
         for(Lesson CurrentLesson : WeekDays.get(OptimalDay))
@@ -72,10 +71,7 @@ public class Schedule
             boolean TAOverLap = CurrentLesson.instructor.equals(NewLesson.instructor);
             boolean TimeOverLap = CurrentLesson.TimeFrame.equals(NewLesson.TimeFrame);
             boolean SameGroup = CurrentLesson.Group == NewLesson.Group && !OneIsALecture;
-            if(CurrentLesson.TimeFrame.EndTime > MaxEndTime)
-            {
-                MaxEndTime = CurrentLesson.TimeFrame.EndTime;
-            }
+
             if(CurrentLesson.equals(NewLesson))
             {
                 if(RoomOverLaped && TimeOverLap && !OneIsALecture && !SameGroup)
