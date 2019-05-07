@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package emotionalSupport;
 
 import com.jfoenix.controls.JFXButton;
@@ -11,23 +6,15 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import javafx.fxml.FXML;
-import javafx.scene.layout.StackPane;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
-/**
- * FXML Controller class
- *
- * @author Ahmed Hatem
- */
-public class AddCoursesController implements Initializable {
-    
-    
-    @FXML
-    private StackPane WarningPane;
-    
+public class EditCourseController {
+
     @FXML
     private JFXListView<JFXCheckBox> Doctors;
 
@@ -36,37 +23,44 @@ public class AddCoursesController implements Initializable {
 
     @FXML
     private JFXListView<JFXCheckBox> Rooms;
-    
-    @FXML
-    private JFXButton Cancel;
-    
-    @FXML
-    private JFXTextField LecturesNumberText;
 
     @FXML
-    private JFXTextField LecturesHoursText;
+    private JFXTextField Name;
+
+    @FXML
+    private JFXTextField LecturesNumberText;
 
     @FXML
     private JFXTextField SectionsNumberText;
 
     @FXML
+    private JFXTextField LecturesHoursText;
+
+    @FXML
     private JFXTextField SectionHoursText;
-    
+
     @FXML
     private JFXTextField PriorityText;
+
+    @FXML
+    private JFXButton Cancel;
+
+    @FXML
+    private StackPane WarningPane;
+    
+    static String EditedCourseName;
     
     @FXML
-    private JFXTextField Name;
-    
-    @FXML
-    void AddCourse()
+    void Cancel()
     {
+        WindowManager.CloseWindow(Cancel);
+    }
+
+    @FXML
+    void Save()
+    {
+       DataManager.AllCourses.remove(EditedCourseName);
        String CourseName = Name.getText();
-       if(DataManager.AllCourses.containsKey(CourseName.toLowerCase()))
-       {
-           WindowManager.ShowWarning(WarningPane, "Duplicate Data", "The Course is already added");
-           return;
-       }
        int LecturesNumber ,LecturesHours,SectionsNumber,SectionHours,Priority;
        ArrayList<String> DoctorNames = new  ArrayList<String>();
        ArrayList<String> TANames = new  ArrayList<String>();
@@ -123,24 +117,58 @@ public class AddCoursesController implements Initializable {
        {
            Course NewCourse = new Course(CourseName, CourseDetails, DoctorNames, TANames, RoomNames,Priority);
            DataManager.AllCourses.put(CourseName.toLowerCase(), NewCourse);
-           DataManager.AddCourseToFile(NewCourse, "Courses.txt");
+           DataManager.WriteCourses("Courses.txt");
            Cancel();
-       }     
+       } 
     }
-
+    
+    
+    private void FillOldData()
+    {
+        Course OldCourse = DataManager.AllCourses.get(EditedCourseName);
+        Name.setText(OldCourse.name);
+        LecturesNumberText.setText(String.valueOf(OldCourse.Details.no_of_lecs));
+        LecturesHoursText.setText(String.valueOf(OldCourse.Details.lec_hrs));
+        SectionsNumberText.setText(String.valueOf(OldCourse.Details.no_of_sections));
+        SectionHoursText.setText(String.valueOf(OldCourse.Details.sec_hrs));
+        PriorityText.setText(String.valueOf(OldCourse.Priority));
+        
+        
+        for(String Doctor : DataManager.AllDoctors.keySet())
+        {
+            JFXCheckBox Current = WindowManager.CreateCheckBox(Doctor);
+            if(OldCourse.Doctors.contains(Doctor))
+            {
+                Current.setSelected(true);
+            }
+            Doctors.getItems().add(Current);
+        }
+        
+        for(String TA : DataManager.AllTeachingAssistants.keySet())
+        {
+            JFXCheckBox Current = WindowManager.CreateCheckBox(TA);
+            if(OldCourse.TAs.contains(TA))
+            {
+                Current.setSelected(true);
+            }
+            TAs.getItems().add(Current);
+        }
+        
+        for(String Room : DataManager.AllRooms.keySet())
+        {
+            JFXCheckBox Current = WindowManager.CreateCheckBox(Room);
+            if(OldCourse.Rooms.contains(Room))
+            {
+                Current.setSelected(true);
+            }
+            Rooms.getItems().add(Current);
+        }
+    }
     
     @FXML
-    void Cancel()
-    {
-      WindowManager.CloseWindow(Cancel);
-    }
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb)
+    void initialize()
     {
         WarningPane.setDisable(true);
-        WindowManager.IntializeListsData(Doctors, TAs, Rooms);
-    }    
-    
+        FillOldData();
+    }
 }

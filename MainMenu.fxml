@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="CurrentWindow" prefHeight="566.0" prefWidth="750.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.MainMenuController">
@@ -17,5 +18,6 @@
       <JFXButton fx:id="Quit" buttonType="RAISED" layoutX="299.0" layoutY="472.0" onAction="#Quit" prefHeight="50.0" prefWidth="152.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Quit" textFill="WHITE" />
       <JFXButton buttonType="RAISED" layoutX="147.0" layoutY="178.0" onAction="#GenerateTable" prefHeight="50.0" prefWidth="152.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="Generate Table" textFill="WHITE" />
       <JFXButton fx:id="ViewCourses" buttonType="RAISED" layoutX="451.0" layoutY="332.0" onAction="#ViewCourses" prefHeight="50.0" prefWidth="152.0" style="-fx-background-color: #4527a0; -jfx-disable-visual-focus: true;" text="View Courses" textFill="WHITE" />
+      <StackPane fx:id="WarningPane" layoutX="241.0" layoutY="229.0" prefHeight="108.0" prefWidth="236.0" />
    </children>
 </AnchorPane>

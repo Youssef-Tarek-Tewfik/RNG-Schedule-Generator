@@ -67,7 +67,7 @@ public class Schedule
         
         for(Lesson CurrentLesson : WeekDays.get(OptimalDay))
         {
-            boolean OneIsALecture = (CurrentLesson.lessonType.equals(LessonType.Lecture) || NewLesson.lessonType.equals(LessonType.Lecture)) && NewLesson.Group == CurrentLesson.Group;
+            boolean OneIsALecture = CurrentLesson.lessonType.equals(LessonType.Lecture) || NewLesson.lessonType.equals(LessonType.Lecture) && NewLesson.Group == CurrentLesson.Group;
             boolean RoomOverLaped = CurrentLesson.room.equals(NewLesson.room);
             boolean TAOverLap = CurrentLesson.instructor.equals(NewLesson.instructor);
             boolean TimeOverLap = CurrentLesson.TimeFrame.equals(NewLesson.TimeFrame);
@@ -100,15 +100,19 @@ public class Schedule
                         }
                     }
                 }
-                NewLesson.TimeFrame.StartTime = CurrentLesson.TimeFrame.EndTime;
-                NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;              
+                
+                if(NewLesson.Priority > CurrentLesson.Priority && !OneIsALecture)
+                {
+                    CurrentLesson.TimeFrame.StartTime = NewLesson.TimeFrame.EndTime;
+                    CurrentLesson.TimeFrame.EndTime = CurrentLesson.TimeFrame.StartTime + CurrentLesson.TimeFrame.Duration;
+                    NewLesson = new Lesson(CurrentLesson);
+                }
+                else
+                {
+                    NewLesson.TimeFrame.StartTime = CurrentLesson.TimeFrame.EndTime;
+                    NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;    
+                }         
             }
-        }
-        while(WeekDays.get(OptimalDay).contains(NewLesson))
-        {
-            NewLesson.TimeFrame.StartTime = MaxEndTime;
-            NewLesson.TimeFrame.EndTime = NewLesson.TimeFrame.StartTime + NewLesson.TimeFrame.Duration;
-            MaxEndTime = NewLesson.TimeFrame.EndTime;
         }
         return NewLesson.TimeFrame;
     }

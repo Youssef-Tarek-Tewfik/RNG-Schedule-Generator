@@ -12,6 +12,7 @@ public class Course
     public  ArrayList<String> TAs;
     public ArrayList<String> Rooms;
     public LessonDetails Details;
+    public int Priority;
     
     
     public Course(String name, LessonDetails lessonDetails)
@@ -21,7 +22,7 @@ public class Course
         id = ++Count;  
     }
     
-    public Course(String name, LessonDetails lessonDetails,  ArrayList<String> doctors,  ArrayList<String> TAs, ArrayList<String> rooms)
+    public Course(String name, LessonDetails lessonDetails,  ArrayList<String> doctors,  ArrayList<String> TAs, ArrayList<String> rooms,int Priority)
     {
         id = ++Count;
         this.name = name;
@@ -29,6 +30,7 @@ public class Course
         this.Doctors = doctors;
         this.TAs = TAs;
         this.Rooms = rooms;
+        this.Priority = Priority;
     }
 
     public String getName()
@@ -74,6 +76,7 @@ public class Course
             Result += CurrentRoom + "#";
         }
         Result = Result.substring(0, Result.length()-1);
+        Result += "/" + Priority;
         return Result;
     }
     

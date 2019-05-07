@@ -31,7 +31,7 @@ public class TableGenerator
         {
             int LecturesNumber = CurrentCourse.Details.no_of_lecs;
             int SectionsNumeber = CurrentCourse.Details.no_of_sections;
-            int LectureHours = (int)CurrentCourse.Details.lec_hrs;
+            int LectureHours = CurrentCourse.Details.lec_hrs;
             TotalLessons += LecturesNumber + SectionsNumeber;
             ArrayList<Integer> AddedLectures = new ArrayList<Integer>();
             int RandomLecture = 0;
@@ -44,7 +44,7 @@ public class TableGenerator
                     RandomLecture = RandomNumber.nextInt(SectionsNumeber);                   
                 }
                 AddedLectures.add(RandomLecture);
-                Lesson NewLesson = new Lesson(Doctor, Room, new TimePeriod(LectureHours), Lesson.LessonType.Lecture, CurrentCourse.name,RandomLecture+1);
+                Lesson NewLesson = new Lesson(Doctor, Room, new TimePeriod(LectureHours), Lesson.LessonType.Lecture, CurrentCourse.name,RandomLecture+1,CurrentCourse.Priority);
                 TimePeriod LectureTime = NewSchedule.SetOptimalTime(NewLesson);
                 NewSchedule.AddLesson(LectureTime.CurrentDay.ordinal(), NewLesson);
             }          
@@ -66,7 +66,7 @@ public class TableGenerator
                     RandomSection = RandomNumber.nextInt(SectionsNumeber);                   
                 }
                 AddedSections.add(RandomSection);
-                Lesson NewLesson = new Lesson(TA, Room, new TimePeriod(SectionHours), Lesson.LessonType.Section, CurrentCourse.name,RandomSection+1);
+                Lesson NewLesson = new Lesson(TA, Room, new TimePeriod(SectionHours), Lesson.LessonType.Section, CurrentCourse.name,RandomSection+1,CurrentCourse.Priority);
                 TimePeriod SectionTime =  NewSchedule.SetOptimalTime(NewLesson);
                 NewSchedule.AddLesson(SectionTime.CurrentDay.ordinal(), NewLesson);
             }

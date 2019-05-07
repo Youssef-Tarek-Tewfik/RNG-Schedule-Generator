@@ -263,7 +263,8 @@ public final class DataManager
                    String []DoctorNames = Information[2].split("!");
                    String []TANames = Information[3].split("@");
                    String []RoomNames = Information[4].split("#");
-                   Details = new LessonDetails(Integer.parseInt(DetailInfo[0]),Integer.parseInt(DetailInfo[1]), Float.parseFloat(DetailInfo[2]), Float.parseFloat(DetailInfo[3]));
+                   int Priority = Integer.parseInt(Information[5]); 
+                   Details = new LessonDetails(Integer.parseInt(DetailInfo[0]),Integer.parseInt(DetailInfo[1]), Integer.parseInt(DetailInfo[2]), Integer.parseInt(DetailInfo[3]));
                    for(String CurrentDoctor : DoctorNames)
                    {
                        Doctors.add(CurrentDoctor);
@@ -276,7 +277,7 @@ public final class DataManager
                    {
                         Rooms.add(CurrentRoom);
                    }
-                   Course CurrentCourse = new Course(Name, Details, Doctors, TAs, Rooms);
+                   Course CurrentCourse = new Course(Name, Details, Doctors, TAs, Rooms,Priority);
                    AllCourses.put(Name, CurrentCourse);
                }
                else if(FileName.equals("Rooms.txt"))

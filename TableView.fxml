@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="953.0" prefWidth="1495.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.TableViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1022.0" prefWidth="1495.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emotionalSupport.TableViewController">
    <children>
+      <StackPane fx:id="WarningPane" layoutX="355.0" layoutY="233.0" prefHeight="419.0" prefWidth="786.0" />
       <Text fill="#cdcdcd" layoutX="27.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sunday">
          <font>
             <Font name="Calibri Italic" size="29.0" />
@@ -34,17 +38,36 @@
             <Font name="Calibri Italic" size="29.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#43289e" height="64.0" layoutX="-2.0" layoutY="14.0" stroke="#3c3c3c" strokeType="INSIDE" strokeWidth="7.0" width="1495.0" />
-      <Text fx:id="title" fill="#fcffe6" layoutX="-203.0" layoutY="-45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Table" textAlignment="CENTER" wrappingWidth="1054.13671875" x="300.0" y="100.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#43289e" height="64.0" layoutX="-2.0" layoutY="14.0" stroke="#3c3c3c" strokeType="INSIDE" strokeWidth="7.0" width="1958.0" />
+      <Text fx:id="title" fill="#fcffe6" layoutX="-55.0" layoutY="-45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Table" textAlignment="CENTER" wrappingWidth="1054.13671875" x="300.0" y="100.0">
          <font>
             <Font name="Calibri Bold Italic" size="36.0" />
          </font>
       </Text>
-      <JFXMasonryPane fx:id="Sunday" layoutX="196.0" layoutY="117.0" prefHeight="120.0" prefWidth="1308.0" />
-      <JFXMasonryPane fx:id="Monday" layoutX="196.0" layoutY="280.0" prefHeight="120.0" prefWidth="1308.0" />
-      <JFXMasonryPane fx:id="Tuesday" layoutX="196.0" layoutY="442.0" prefHeight="120.0" prefWidth="1308.0" />
-      <JFXMasonryPane fx:id="Wednesday" layoutX="196.0" layoutY="601.0" prefHeight="120.0" prefWidth="1308.0" />
-      <JFXMasonryPane fx:id="Thursday" layoutX="197.0" layoutY="758.0" prefHeight="120.0" prefWidth="1308.0" />
-      <StackPane fx:id="WarningPane" layoutX="355.0" layoutY="233.0" prefHeight="419.0" prefWidth="786.0" />
+      <JFXMasonryPane fx:id="Sunday" layoutX="196.0" layoutY="119.0" prefHeight="120.0" prefWidth="1661.0" />
+      <JFXMasonryPane fx:id="Monday" layoutX="196.0" layoutY="277.0" prefHeight="120.0" prefWidth="1761.0" />
+      <JFXMasonryPane fx:id="Tuesday" layoutX="196.0" layoutY="436.0" prefHeight="120.0" prefWidth="1775.0" />
+      <JFXMasonryPane fx:id="Wednesday" layoutX="196.0" layoutY="595.0" prefHeight="120.0" prefWidth="1671.0" />
+      <JFXMasonryPane fx:id="Thursday" layoutX="197.0" layoutY="754.0" prefHeight="120.0" prefWidth="1715.0" />
+      <JFXComboBox fx:id="InstructorFilter" focusColor="WHITE" labelFloat="true" layoutX="511.0" layoutY="946.0" style="-fx-background-color: #ede7f6;" unFocusColor="WHITE" />
+      <Label layoutX="416.0" layoutY="945.0" text="Instructor :" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="RoomFilter" focusColor="WHITE" labelFloat="true" layoutX="786.0" layoutY="946.0" style="-fx-background-color: #ede7f6;" unFocusColor="WHITE" />
+      <Label layoutX="715.0" layoutY="945.0" text="Room :" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="CourseFilter" focusColor="WHITE" labelFloat="true" layoutX="1024.0" layoutY="946.0" style="-fx-background-color: #ede7f6;" unFocusColor="WHITE" />
+      <Label layoutX="953.0" layoutY="945.0" text="Course :" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="Filter" buttonType="RAISED" layoutX="1239.0" layoutY="933.0" onAction="#Filter" prefHeight="50.0" prefWidth="80.0" style="-fx-background-color: #4527a0;" text="Filter" textFill="WHITE" />
+      <JFXButton fx:id="Regenerate" buttonType="RAISED" layoutX="1385.0" layoutY="933.0" onAction="#GenerateTable" prefHeight="50.0" prefWidth="80.0" style="-fx-background-color: #4527a0;" text="Regenerate" textFill="WHITE" />
    </children>
 </AnchorPane>

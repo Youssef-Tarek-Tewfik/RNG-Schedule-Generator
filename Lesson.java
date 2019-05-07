@@ -16,6 +16,7 @@ public class Lesson
     public String room;
     public int Group;
     public TimePeriod TimeFrame;
+    int Priority;
     private static int Count = 0;
 
     @Override
@@ -72,7 +73,7 @@ public class Lesson
         return hash;
     }
 
-    public Lesson(String instructor, String room, TimePeriod TimeFrame, LessonType lessonType, String course,int Group)
+    public Lesson(String instructor, String room, TimePeriod TimeFrame, LessonType lessonType, String course,int Group,int Priority)
     {
         this.lessonType = lessonType;
         this.CourseName = course;
@@ -80,7 +81,21 @@ public class Lesson
         this.room = room;
         this.TimeFrame = TimeFrame;
         this.Group = Group;
+        this.Priority = Priority;
     }
+    
+    public Lesson (Lesson Copy)
+    {
+        this.lessonType = Copy.lessonType;
+        this.CourseName = Copy.CourseName;
+        this.instructor = Copy.instructor;
+        this.room = Copy.room;
+        this.TimeFrame = Copy.TimeFrame;
+        this.Group = Copy.Group;
+        this.Priority = Copy.Priority;
+    }
+    
+    
     @Override
     public String toString()
     {
@@ -93,7 +108,7 @@ public class Lesson
             TimeFrame.EndTime -=12;
         }
         return("\nName : " + CourseName +"\nStartTime : " + TimeFrame.StartTime + "\nEndTime : "
-                + TimeFrame.EndTime + "\nType : " + lessonType + " " + Group + "\n   Instructor : " + instructor + "\n Room : " + room);
+                + TimeFrame.EndTime + "\nType : " + lessonType + " " + Group + "\nInstructor : " + instructor + "\nRoom : " + room);
     }
     
     public static int getCount()
