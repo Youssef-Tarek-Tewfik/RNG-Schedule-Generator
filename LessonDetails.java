@@ -1,18 +1,22 @@
 package emotionalSupport;
+/**
+ * a class for more course  details 
+ * @author Mohamed Amr
+ */
 
 public class LessonDetails
 {
-    /**course number of lectures per week */
+                                               /**course number of lectures per week */
     public int no_of_lecs;
-    /**course number of sections per week */
+                                               /**course number of sections per week */
     public int no_of_sections;
-    /** A one lecture number of hours */
+                                               /** A one lecture number of hours */
     public int lec_hrs;
-    /**A one section number of hours*/
+                                               /**A one section number of hours*/
     public int sec_hrs;
-    /** Number of students per lecture */
+                                               /** Number of students per lecture */
     public int lectureAttendees;
-    /** Number of students per Section or Lab */
+                                                /** Number of students per Section or Lab */
     public int sectionAttendees;
     
             /**
