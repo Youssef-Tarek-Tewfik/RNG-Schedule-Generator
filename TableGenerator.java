@@ -1,19 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package emotionalSupport;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
+class SortByPriority implements Comparator<Course>
+{
+    @Override
+    public int compare(Course C1 ,Course C2)
+    {
+        return (C2.Priority - C1.Priority);
+    }
+}
 
-/**
- *
- * @author Ahmed Hatem
- */
 public class TableGenerator
 {
     static int TotalLessons;
@@ -26,6 +26,7 @@ public class TableGenerator
         Schedule NewSchedule = new Schedule();
         ArrayList<Course> ShuffledCourses = new ArrayList<Course>(DataManager.AllCourses.values());
         Collections.shuffle(ShuffledCourses);
+        Collections.sort(ShuffledCourses,new SortByPriority());
         TotalLessons = 0;
         for(Course CurrentCourse : ShuffledCourses)
         {
