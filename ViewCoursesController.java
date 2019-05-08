@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.scene.layout.StackPane;
 
 /**
  * FXML Controller class
@@ -27,13 +28,13 @@ public class ViewCoursesController implements Initializable {
     private JFXButton DeleteCourse;
 
     @FXML
-    private JFXButton EditCourse;
+    private JFXButton Cancel;
+    
+    @FXML
+    private StackPane WarningPane; 
 
     @FXML
-    private JFXButton Close;
-
-    @FXML
-    void Cancel()
+    void Delete()
     {
         for(JFXCheckBox CurrentCourse : Courses.getItems())
         {
@@ -43,13 +44,47 @@ public class ViewCoursesController implements Initializable {
           }
         }
         DataManager.WriteCourses("Courses.txt");
-        WindowManager.CloseWindow(Close);
+        WindowManager.CloseWindow(DeleteCourse);
+    }
+    
+    
+    @FXML
+    void Edit()
+    {
+        int Count = 0;
+        String CourseName="";
+        for(JFXCheckBox CurrentCourse : Courses.getItems())
+        {
+          if(CurrentCourse.isSelected())
+          {
+            Count++;
+            CourseName = CurrentCourse.getText();
+          }
+        }
+        
+        if(Count > 1)
+        {
+            WindowManager.ShowWarning(WarningPane, "More than one course was selected", "Please select only one course to edit");
+        }
+        else
+        {
+            EditCourseController.EditedCourseName = CourseName;
+            WindowManager.OpenWindow(this, "EditCourse");
+        }
+    }
+    
+    
+    @FXML
+    private void Cancel()
+    {
+        WindowManager.CloseWindow(Cancel);
     }
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        WarningPane.setDisable(true);
         for(String CurrentCourse : DataManager.AllCourses.keySet())
         {
             Courses.getItems().add(WindowManager.CreateCheckBox(CurrentCourse));

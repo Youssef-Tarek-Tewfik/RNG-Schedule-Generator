@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.StackPane;
 
 
 public class MainMenuController implements Initializable {
@@ -17,6 +18,9 @@ public class MainMenuController implements Initializable {
     
     @FXML
     private JFXButton Quit;
+    
+    @FXML
+    private StackPane WarningPane;
 
     
     @FXML
@@ -35,8 +39,15 @@ public class MainMenuController implements Initializable {
     void GenerateTable()
     {
        Schedule.SetWorkingHours(8, 20);
-       Schedule GeneratedSchedule = TableGenerator.GenerateTable();
-       GeneratedSchedule.PrintSchedule();
+       TableViewController.GeneratedSchedule = TableGenerator.GenerateTable(); 
+       if(TableGenerator.Failed)
+       {
+          WindowManager.ShowWarning(WarningPane, "Table Generation Failed", "Faild to generate the table due to lack of time");
+       }
+       else
+       {
+         WindowManager.OpenWindow(this, "TableView");
+       }
     }
     
     @FXML

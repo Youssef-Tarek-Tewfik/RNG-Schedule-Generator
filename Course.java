@@ -1,135 +1,139 @@
 package emotionalSupport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-public class Course
+/**
+ * 
+ * @author Mohamed Amr
+ * A class for all the course details
+ */
+
+public class Course   
 {
-    private final int id;
-    public final String name;
-    static int Count = DataManager.AllCourses.size();
-    public HashMap<String ,Integer> Doctors;
-    public HashMap<String ,Integer> TAs;
-    public HashMap<String ,Integer> Rooms;
+  /** Each course has an id depends on "count variable" */
+    private final int id; 
+                                 /** Each course has a name */
+    public final String name; 
+    /** to know the number of courses
+     * also used for determining the course ID
+     */
+    static int Count = DataManager.AllCourses.size(); 
+                                           /** Each course is given by a doctor or more. */
+    public  ArrayList<String> Doctors;
+                                           /** Each course is assigned to a number of TA's. */
+    public  ArrayList<String> TAs; 
+                                           /** Each course is assigned to specific rooms. */
+    public ArrayList<String> Rooms;
     public LessonDetails Details;
+    public int Priority;
     
+                                           /**  For more course details. */
     
+    /**
+     * 
+     * @param name To set the name of the course.
+     * @param lessonDetails  To set  details for each course.
+     */
     public Course(String name, LessonDetails lessonDetails)
     {
         this.name = name;
         this.Details = lessonDetails;	
+        /** 
+         * ID depends on the number of courses
+         */
         id = ++Count;  
     }
     
-    public Course(String name, LessonDetails lessonDetails, HashMap<String ,Integer> doctors, HashMap<String ,Integer> TAs, HashMap<String ,Integer> rooms)
+    public Course(String name, LessonDetails lessonDetails,  ArrayList<String> doctors,  ArrayList<String> TAs, ArrayList<String> rooms,int Priority)
     {
+    /**
+     * Constructor for assigning the course to the instructors and it's rooms.
+     * @param name Course name
+     * @param lessonDetails More course details.
+     * @param doctors Course Doctor
+     * @param TAs Course teaching assistants
+     * @param rooms  Course rooms
+     */
         id = ++Count;
         this.name = name;
         this.Details = lessonDetails;	
         this.Doctors = doctors;
         this.TAs = TAs;
         this.Rooms = rooms;
-    }
+        this.Priority = Priority;
+      }
 
+   /**
+    * 
+    * @return Course name 
+    */
     public String getName()
     {
         return name;
     }
-    
-    public String GetFreestDoctor()
+    /**
+     * 
+     * @return A random doctor to give the Lecture. 
+     */
+    public String GetRandomDoctor()
     {
-        String Name = "";
-        int Min = 9999;
-        for(Map.Entry<String,Integer> CurrentDoctor : Doctors.entrySet())
-        {
-            if(CurrentDoctor.getValue() < Min)
-            {
-                Min = CurrentDoctor.getValue();
-                Name = CurrentDoctor.getKey();
-            }
-        }
-        Doctors.put(Name,Doctors.get(Name)+1);
-        return Name;
+        return Doctors.get(new Random().nextInt(Doctors.size()));
     }
+    /**
+     * 
+     * @return a random TA to give section or lab 
+     */
     
-    public String GetFreestTA()
+    public String GetRandomTA()
     {
-        String Name = "";
-        int Min = 9999;
-        for(Map.Entry<String,Integer> CurrentTA : TAs.entrySet())
-        {
-            if(CurrentTA.getValue() < Min)
-            {
-                Min = CurrentTA.getValue();
-                Name = CurrentTA.getKey();
-            }
-        }
-        TAs.put(Name, TAs.get(Name)+1);
-        return Name;
+        return TAs.get(new Random().nextInt(TAs.size()));
     }
-    
-    public String GetFreestRoom()
+    /**
+     * 
+     * @return a random room for a lecture, a section or a lab 
+     */
+    public String GetRandomRoom()
     {
-        String Name = "";
-        int Min = 9999;
-        for(Map.Entry<String,Integer> CurrentRoom : Rooms.entrySet())
-        {
-            if(CurrentRoom.getValue() < Min)
-            {
-                Min = CurrentRoom.getValue();
-                Name = CurrentRoom.getKey();
-            }
-        }
-        //Rooms.put(Name, Rooms.get(Name)+1);
-        return Name;
+        return Rooms.get(new Random().nextInt(Rooms.size()));
     }
-    
-
-    public void Reset()
-    {
-        for(Integer DoctorLessons : Doctors.values())
-        {
-            DoctorLessons= 0;
-        }
-        for(Integer TALessons : TAs.values())
-        {
-            TALessons = 0;
-        }
-        for(Integer RoomLessons : Rooms.values())
-        {
-            RoomLessons= 0;
-        }
-    }
+    /**
+     * used for checking 
+     * "console only" and not used in the GUI
+     * @return 
+     */
     
     @Override
     public String toString()
     {
         String Result = name + "/" + Details.toString() + "/";
         
-        for(String CurrentDoctor : Doctors.keySet())
+        for(String CurrentDoctor : Doctors)
         {
             Result += CurrentDoctor + "!";
         }
         Result = Result.substring(0, Result.length()-1);
         Result += "/";
-        for(String CurrentTA : TAs.keySet())
+        for(String CurrentTA : TAs)
         {
             Result += CurrentTA + "@";
         }
         Result = Result.substring(0, Result.length()-1);
         Result += "/";
-        for(String CurrentRoom : Rooms.keySet())
+        for(String CurrentRoom : Rooms)
         {
             Result += CurrentRoom + "#";
         }
         Result = Result.substring(0, Result.length()-1);
+        Result += "/" + Priority;
         return Result;
     }
     
    
-    
+    /**
+     * 
+     * @return course ID 
+     */
     public int getID()
     {
             return id;

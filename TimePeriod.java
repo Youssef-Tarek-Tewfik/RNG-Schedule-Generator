@@ -8,25 +8,25 @@ import java.util.Random;
 public class TimePeriod
 {
     // Time Must
-    float StartTime;
-    float EndTime;
+    int StartTime;
+    int EndTime;
+    int Duration;
     Day CurrentDay;
     static Random RandomNumber = new Random();
     
-    public TimePeriod(float StartTime, float EndTime, Day CurrentDay)
+    public TimePeriod(int StartTime, int EndTime, Day CurrentDay)
     {
         this.StartTime = StartTime;
         this.EndTime = EndTime;
         this.CurrentDay = CurrentDay;
+        Duration = EndTime - StartTime;
     }
     
-    public static TimePeriod RandomTimeFrame(int Duration)
+    public TimePeriod(int Duration)
     {
-       int StartBound = Schedule.ClosingTime - Duration;
-       int Start = RandomNumber.nextInt((StartBound - Schedule.OpeningTime) + 1) + Schedule.OpeningTime;
-       int End = Start + Duration;
-       int RandomDay = RandomNumber.nextInt(5);
-       return new TimePeriod(Start, End, Day.GetDay(RandomDay));
+        StartTime = Schedule.OpeningTime;
+        EndTime = StartTime + Duration;
+        this.Duration = Duration;
     }
     
     @Override
@@ -46,7 +46,7 @@ public class TimePeriod
         {
             return false;
         }
-        else if(this.StartTime <= other.EndTime && other.StartTime <= this.EndTime)
+        else if(this.StartTime < other.EndTime && other.StartTime < this.EndTime)
         {
             return true;
         }

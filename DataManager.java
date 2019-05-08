@@ -256,27 +256,28 @@ public final class DataManager
                {
                    String Name = Information[0];
                    LessonDetails Details;                 
-                   HashMap<String ,Integer> Doctors = new HashMap<String ,Integer>();
-                   HashMap<String ,Integer> TAs = new HashMap<String ,Integer>();
-                   HashMap<String ,Integer> Rooms = new HashMap<String ,Integer>();
+                   ArrayList<String> Doctors = new  ArrayList<String>();
+                    ArrayList<String> TAs = new  ArrayList<String>();
+                   ArrayList<String> Rooms = new ArrayList<String>();
                    String []DetailInfo = Information[1].split("-");
                    String []DoctorNames = Information[2].split("!");
                    String []TANames = Information[3].split("@");
                    String []RoomNames = Information[4].split("#");
-                   Details = new LessonDetails(Integer.parseInt(DetailInfo[0]),Integer.parseInt(DetailInfo[1]), Float.parseFloat(DetailInfo[2]), Float.parseFloat(DetailInfo[3]));
+                   int Priority = Integer.parseInt(Information[5]); 
+                   Details = new LessonDetails(Integer.parseInt(DetailInfo[0]),Integer.parseInt(DetailInfo[1]), Integer.parseInt(DetailInfo[2]), Integer.parseInt(DetailInfo[3]));
                    for(String CurrentDoctor : DoctorNames)
                    {
-                       Doctors.put(CurrentDoctor,0);
+                       Doctors.add(CurrentDoctor);
                    }
                    for(String CurrentTA : TANames)
                    {
-                       TAs.put(CurrentTA,0);
+                       TAs.add(CurrentTA);
                    }
                    for(String CurrentRoom : RoomNames)
                    {
-                        Rooms.put(CurrentRoom,0);
+                        Rooms.add(CurrentRoom);
                    }
-                   Course CurrentCourse = new Course(Name, Details, Doctors, TAs, Rooms);
+                   Course CurrentCourse = new Course(Name, Details, Doctors, TAs, Rooms,Priority);
                    AllCourses.put(Name, CurrentCourse);
                }
                else if(FileName.equals("Rooms.txt"))

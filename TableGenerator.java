@@ -7,6 +7,7 @@ package emotionalSupport;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 
 /**
@@ -16,8 +17,12 @@ import java.util.Collections;
 public class TableGenerator
 {
     static int TotalLessons;
+    static Random RandomNumber;
+    static boolean Failed;
     public static Schedule GenerateTable()
     {
+        Failed = false;
+        RandomNumber = new Random();
         Schedule NewSchedule = new Schedule();
         ArrayList<Course> ShuffledCourses = new ArrayList<Course>(DataManager.AllCourses.values());
         Collections.shuffle(ShuffledCourses);
@@ -26,15 +31,21 @@ public class TableGenerator
         {
             int LecturesNumber = CurrentCourse.Details.no_of_lecs;
             int SectionsNumeber = CurrentCourse.Details.no_of_sections;
-            int LectureHours = (int)CurrentCourse.Details.lec_hrs;
-            CurrentCourse.Reset();
-            TotalLessons += LecturesNumber + SectionsNumeber;           
+            int LectureHours = CurrentCourse.Details.lec_hrs;
+            TotalLessons += LecturesNumber + SectionsNumeber;
+            ArrayList<Integer> AddedLectures = new ArrayList<Integer>();
+            int RandomLecture = 0;
             for(int j= 0; j < LecturesNumber ; j++)
             {
-                String Doctor = CurrentCourse.GetFreestDoctor();
-                String Room = CurrentCourse.GetFreestRoom();
-                TimePeriod LectureTime = NewSchedule.OptimalTime(LectureHours,Room) ;               
-                Lesson NewLesson = new Lesson(Doctor, Room, LectureTime, Lesson.LessonType.Lecture, CurrentCourse.name + " Lecture ");
+                String Doctor = CurrentCourse.GetRandomDoctor();
+                String Room = CurrentCourse.GetRandomRoom();
+                while(AddedLectures.contains(RandomLecture))
+                {
+                    RandomLecture = RandomNumber.nextInt(SectionsNumeber);                   
+                }
+                AddedLectures.add(RandomLecture);
+                Lesson NewLesson = new Lesson(Doctor, Room, new TimePeriod(LectureHours), Lesson.LessonType.Lecture, CurrentCourse.name,RandomLecture+1,CurrentCourse.Priority);
+                TimePeriod LectureTime = NewSchedule.SetOptimalTime(NewLesson);
                 NewSchedule.AddLesson(LectureTime.CurrentDay.ordinal(), NewLesson);
             }          
           
@@ -44,23 +55,27 @@ public class TableGenerator
         {
             int SectionsNumeber = CurrentCourse.Details.no_of_sections;
             int SectionHours = (int)CurrentCourse.Details.sec_hrs;
+            ArrayList<Integer> AddedSections = new ArrayList<Integer>();
+            int RandomSection = 0;
             for(int j= 0; j < SectionsNumeber ; j++)
             {
-                String TA = CurrentCourse.GetFreestTA();
-                String Room = CurrentCourse.GetFreestRoom();
-                TimePeriod SectionTime = NewSchedule.OptimalTime(SectionHours,Room);
-                Lesson NewLesson = new Lesson(TA, Room, SectionTime, Lesson.LessonType.Section, CurrentCourse.name + " Section " + (j+1));
+                String TA = CurrentCourse.GetRandomTA();
+                String Room = CurrentCourse.GetRandomRoom();
+                while(AddedSections.contains(RandomSection))
+                {
+                    RandomSection = RandomNumber.nextInt(SectionsNumeber);                   
+                }
+                AddedSections.add(RandomSection);
+                Lesson NewLesson = new Lesson(TA, Room, new TimePeriod(SectionHours), Lesson.LessonType.Section, CurrentCourse.name,RandomSection+1,CurrentCourse.Priority);
+                TimePeriod SectionTime =  NewSchedule.SetOptimalTime(NewLesson);
                 NewSchedule.AddLesson(SectionTime.CurrentDay.ordinal(), NewLesson);
             }
         }
-        
-        
-        if(NewSchedule.Fitness != TotalLessons)
+       
+        if(TotalLessons != NewSchedule.Fitness)
         {
-            GenerateTable();
+            Failed = true;
         }
-        
-              
         return NewSchedule; 
     }   
 }
